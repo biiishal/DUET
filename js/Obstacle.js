@@ -19,11 +19,13 @@ var Obstacle = function(dx, dy, fs) {
 
 Obstacle.prototype.updatePos = function() {	
 	if(this.y < 700) {
-		console.log('insdide updatePos', this.y);
+		//console.log('insdide updatePos', this.y);
 		this.y +=this.dy;
 		this.x +=this.dx;	
+		if(this.y < 0)return false;
+		return true;
 	}
-	else return;
+	else return false;
 }
 
 

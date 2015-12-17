@@ -67,14 +67,10 @@ var redraw = function() {
 
   //square
   ctx.save();
-  sq.updatePos();
-  drawRectFill(sq);
-  rectUpR.updatePos();
-  drawRectFill(rectUpR);
-  rectUpL.updatePos();
-  drawRectFill(rectUpL); 
-  rectHorzC.updatePos();
-  drawRectFill(rectHorzC); 
+  if(sq.updatePos()) drawRectFill(sq);
+  if(rectUpR.updatePos()) drawRectFill(rectUpR);
+  if(rectUpL.updatePos()) drawRectFill(rectUpL);
+  if(rectHorzC.updatePos()) drawRectFill(rectHorzC);
   ctx.restore();
 
 
