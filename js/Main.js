@@ -21,15 +21,6 @@ document.addEventListener('keydown', onKeyDown);
 //initial call to canvas draw function
 window.requestAnimationFrame(redraw);
 
-// game loop
-// gameLoop = setInterval(function(){
-// 	  for(var i = 0; i < obstacles.length; i++) {
-//     obstacles[i].updatePos();
-//     // collisionDetector.testCollision(redCircle, obstacles[i]);
-//     // collisionDetector.testCollision(blueCircle, obstacles[i]);
-//   }
-// }, GAMEINT);
-
 var game = function() {
 		for(var i = 0; i < obstacles.length; i++) {
     obstacles[i].updatePos();
