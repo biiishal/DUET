@@ -67,10 +67,16 @@ var redraw = function() {
 
   //square
   ctx.save();
-  if(sq.updatePos()) drawRectFill(sq);
-  if(rectUpR.updatePos()) drawRectFill(rectUpR);
-  if(rectUpL.updatePos()) drawRectFill(rectUpL);
-  if(rectHorzC.updatePos()) drawRectFill(rectHorzC);
+  // if(sq.updatePos()) drawRectFill(sq);
+  // if(rectUpR.updatePos()) drawRectFill(rectUpR);
+  // if(rectUpL.updatePos()) drawRectFill(rectUpL);
+  // if(rectHorzC.updatePos()) drawRectFill(rectHorzC);
+
+  for(var i = 0; i < obstacles.length; i++) {
+    console.log('onScreen', obstacles[i].onScreen);
+   if(obstacles[i].onScreen)drawRectFill(obstacles[i]);
+  }
+
   ctx.restore();
 
 

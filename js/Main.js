@@ -6,10 +6,12 @@ console.log(orbit.r);
 
 
 //Create Test Obstacles
-var sq = new SquareStillCenter(0, 5, 'green');
-var rectUpR = new RectangleUprightR(0, 5 );
-var rectUpL = new RectangleUprightL(0, 5 );
-var rectHorzC = new RectangleHorzC(0,5, 'blue');
+var sq = new SquareStillCenter(0, 1.2, 'green');
+var rectUpR = new RectangleUprightR(0, 1.2 );
+var rectUpL = new RectangleUprightL(0, 1.2 );
+var rectHorzC = new RectangleHorzC(0,1.2, 'blue');
+
+var obstacles = [sq, rectUpR, rectUpL, rectHorzC];
 
 //Adding keypress and keyup event listeners
 document.addEventListener('keypress', onKeyPress);
@@ -17,3 +19,11 @@ document.addEventListener('keyup', onKeyUp);
 
 //initial call to canvas draw function
 window.requestAnimationFrame(redraw);
+
+// game loop
+var gameLoop = setInterval(function(){
+	  for(var i = 0; i < obstacles.length; i++) {
+    obstacles[i].updatePos();
+  }
+
+}, 2);

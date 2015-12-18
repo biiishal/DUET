@@ -12,6 +12,7 @@ var Obstacle = function(dx, dy, fs) {
 	this.h = 80;
 	this.dx = dx;
 	this.dy = dy;
+	this.onScreen = false;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;	
@@ -22,10 +23,10 @@ Obstacle.prototype.updatePos = function() {
 		//console.log('insdide updatePos', this.y);
 		this.y +=this.dy;
 		this.x +=this.dx;	
-		if(this.y < 0)return false;
-		return true;
+		this.onScreen = true;
+		if(this.y < -200)this.onScreen = false;
 	}
-	else return false;
+	else this.onScreen = false;
 }
 
 
@@ -37,6 +38,7 @@ var SquareStillCenter = function(dx, dy, fs) {
 	this.h = 80;
 	this.dx = dx;
 	this.dy = dy;
+	this.onScreen = false;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;	
