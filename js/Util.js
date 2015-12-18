@@ -2,11 +2,14 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var w = canvas.width;
 var h = canvas.height;
-var FPS = 5;
+var GAMEINT = 2;
+var ANGLEINTERVAL = 5;
 var ANGLE = 0;
 var ANGLEINC = 1;
 var KEY = { LEFT:97, RIGHT:100, ESC:27 };
 var keyPressInterval;
+var STATE = { START: 0, PLAY: 1, PAUSE: false, HIT: 3 };
+var gameLoop;
 
 
 //CANVAS DRAWING UTILITY
@@ -73,8 +76,8 @@ var redraw = function() {
   // if(rectHorzC.updatePos()) drawRectFill(rectHorzC);
 
   for(var i = 0; i < obstacles.length; i++) {
-    console.log('onScreen', obstacles[i].onScreen);
    if(obstacles[i].onScreen)drawRectFill(obstacles[i]);
+   // drawRectFill(obstacles[i]);
   }
 
   ctx.restore();
@@ -88,20 +91,20 @@ var redraw = function() {
 
 //EVENT LISTENING UTILITY
 function onKeyPress(ev) {
-  //console.log("onKeyPress", ev.keyCode);
+  console.log("onKeyPress", ev.keyCode);
 
   if (!keyPressInterval) {
       switch(ev.keyCode){
           case KEY.LEFT:
               keyPressInterval = setInterval(function() {
               ANGLE -= ANGLEINC;
-              }, FPS);
+              }, ANGLEINTERVAL);
           break;
 
           case KEY.RIGHT:
               keyPressInterval = setInterval(function() {
               ANGLE += ANGLEINC;
-              }, FPS);
+              }, ANGLEINTERVAL);
           break;
       }
   }
@@ -110,4 +113,27 @@ function onKeyPress(ev) {
 function onKeyUp() {
   clearInterval(keyPressInterval);
   keyPressInterval = undefined;
+}
+
+function onKeyDown(ev) {
+  console.log('state.pause', STATE.PAUSE);
+  console.log('sq.x', sq.x);
+  console.log('sq.y', sq.y);
+  console.log('redCircle.x', redCircle.x);
+  console.log('redCircle.x', redCircle.x);
+  switch(ev.keyCode){
+    case KEY.ESC:
+      if(!STATE.PAUSE){
+        clearInterval(gameLoop);
+        document.removeEventListener('keypress', onKeyPress);
+        document.removeEventListener('keyup', onKeyUp);
+        STATE.PAUSE = !STATE.PAUSE;
+      }
+      else {
+        gameLoop = setInterval(game, GAMEINT);
+        document.addEventListener('keypress', onKeyPress);
+        document.addEventListener('keyup', onKeyUp);
+        STATE.PAUSE = !STATE.PAUSE;
+      }     
+  }
 }

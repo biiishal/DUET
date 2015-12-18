@@ -6,11 +6,11 @@ var inheritsFrom = function (child, parent) {
 //Parent Obstacle Class
 
 var Obstacle = function(dx, dy, fs) {
-	this.x = 150;
-	this.y = -100;
-	this.w = 80;
-	this.h = 80;
-	this.dx = dx;
+	this.x; 
+	this.y;
+	this.w;
+	this.h;
+	this.dx = dy;
 	this.dy = dy;
 	this.onScreen = false;
 	if(!fs)this.fs = 'white';
@@ -38,7 +38,7 @@ var SquareStillCenter = function(dx, dy, fs) {
 	this.h = 80;
 	this.dx = dx;
 	this.dy = dy;
-	this.onScreen = false;
+	// this.onScreen = false;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;	

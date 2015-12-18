@@ -16,14 +16,26 @@ var obstacles = [sq, rectUpR, rectUpL, rectHorzC];
 //Adding keypress and keyup event listeners
 document.addEventListener('keypress', onKeyPress);
 document.addEventListener('keyup', onKeyUp);
+document.addEventListener('keydown', onKeyDown);
 
 //initial call to canvas draw function
 window.requestAnimationFrame(redraw);
 
 // game loop
-var gameLoop = setInterval(function(){
-	  for(var i = 0; i < obstacles.length; i++) {
-    obstacles[i].updatePos();
-  }
+// gameLoop = setInterval(function(){
+// 	  for(var i = 0; i < obstacles.length; i++) {
+//     obstacles[i].updatePos();
+//     // collisionDetector.testCollision(redCircle, obstacles[i]);
+//     // collisionDetector.testCollision(blueCircle, obstacles[i]);
+//   }
+// }, GAMEINT);
 
-}, 2);
+var game = function() {
+		for(var i = 0; i < obstacles.length; i++) {
+    obstacles[i].updatePos();
+    // collisionDetector.testCollision(redCircle, obstacles[i]);
+    // collisionDetector.testCollision(blueCircle, obstacles[i]);
+  }
+}
+
+gameLoop = setInterval(game, GAMEINT);
