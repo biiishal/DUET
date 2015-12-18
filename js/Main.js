@@ -1,7 +1,7 @@
 //Create the player
-var orbit = new Orbit(0, 0, 100, null, 'gray');
-var redCircle = new RedCircle(0, 0, 10, 'red');
-var blueCircle = new BlueCircle(0, 0, 10, 'blue');
+var orbit = new Orbit(orbitCx, orbitCy, 100, null, 'gray');
+var redCircle = new RedCircle(orbitCx-100, orbitCy, 10, 'red');
+var blueCircle = new BlueCircle(orbitCx+100, orbitCy, 10, 'blue');
 console.log(orbit.r);
 
 

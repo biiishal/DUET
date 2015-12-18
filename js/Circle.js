@@ -13,10 +13,14 @@ var Circle = function(x, y, r, fs, ss) {
 	this.ss = ss;
 };
 
-Circle.prototype.revolveAround = function(cx, cy, angle) {
-	angle = angle * Math.PI / 180;
-	this.x = Math.cos(angle) * (this.x-cx) - Math.sin(angle) * (this.y-cy) + cx;
-	this.y = Math.sin(angle) * (this.x-cx) + Math.cos(angle) * (this.y-cy) + cy;
+Circle.prototype.revolveAround = function rotate(cx, cy, angle) {
+  var radians = (Math.PI / 180) * angle,
+      cos = Math.cos(radians),
+      sin = Math.sin(radians),
+      nx = (cos * (this.x - cx)) + (sin * (this.y - cy)) + cx,
+      ny = (cos * (this.y - cy)) - (sin * (this.x - cx)) + cy;
+  this.x = nx;
+  this.y = ny;
 }
 
 var Orbit = function(x, y, r, fs, ss) {

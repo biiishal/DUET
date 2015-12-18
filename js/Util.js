@@ -1,14 +1,17 @@
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var GAMEINT = 1;
 var w = canvas.width;
 var h = canvas.height;
-var GAMEINT = 2;
-var ANGLEINTERVAL = 5;
+var orbitCx = w/2;
+var orbitCy = h/1.3;
+
+var ANGLEINTERVAL = 15;
 var ANGLE = 0;
-var ANGLEINC = 1;
+var ANGLEINC = 0.8;
 var KEY = { LEFT:97, RIGHT:100, ESC:27 };
 var keyPressInterval;
-var STATE = { START: 0, PLAY: 1, PAUSE: false, HIT: 3 };
+var STATE = { START: false, PLAY: false, PAUSE: false, HIT: false };
 var gameLoop;
 
 
@@ -39,48 +42,20 @@ var drawCircleStroke = function(el) {
 }
 
 var redraw = function() {
-  ctx.save();
-
   // paint bg
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, w, h);
 
-  // set origin to center
-  ctx.translate(w / 2, h / 1.3);
-
-  // draw orbit
+  //draw the circles
   drawCircleStroke(orbit);
-
-  ctx.save();
-  // rotate + move along x
-  ctx.rotate(Math.PI / 180 * ANGLE);
-  ctx.translate(100, 0);
-  //drawing circles
 	drawCircleFill(redCircle);
-  ctx.restore();
-
-  ctx.save();
-  ctx.rotate(Math.PI / 180 * ANGLE);
-  ctx.translate(-100, 0);
   drawCircleFill(blueCircle);
-
-  ctx.restore();
-
-  ctx.restore();
-
-  //square
-  ctx.save();
-  // if(sq.updatePos()) drawRectFill(sq);
-  // if(rectUpR.updatePos()) drawRectFill(rectUpR);
-  // if(rectUpL.updatePos()) drawRectFill(rectUpL);
-  // if(rectHorzC.updatePos()) drawRectFill(rectHorzC);
 
   for(var i = 0; i < obstacles.length; i++) {
    if(obstacles[i].onScreen)drawRectFill(obstacles[i]);
    // drawRectFill(obstacles[i]);
   }
 
-  ctx.restore();
 
 
   window.requestAnimationFrame(redraw);
@@ -91,19 +66,27 @@ var redraw = function() {
 
 //EVENT LISTENING UTILITY
 function onKeyPress(ev) {
-  console.log("onKeyPress", ev.keyCode);
+  //console.log("onKeyPress", ev.keyCode);
 
   if (!keyPressInterval) {
       switch(ev.keyCode){
           case KEY.LEFT:
               keyPressInterval = setInterval(function() {
-              ANGLE -= ANGLEINC;
+              // console.log('first',ANGLE);
+              if(ANGLE < 5)
+              ANGLE += ANGLEINC;
+              redCircle.revolveAround(orbitCx, orbitCy, ANGLE);
+              blueCircle.revolveAround(orbitCx, orbitCy, ANGLE);
               }, ANGLEINTERVAL);
           break;
 
           case KEY.RIGHT:
               keyPressInterval = setInterval(function() {
-              ANGLE += ANGLEINC;
+                // console.log('first',ANGLE);
+              if(ANGLE > -5)
+              ANGLE -= ANGLEINC;
+              redCircle.revolveAround(orbitCx, orbitCy, ANGLE);
+              blueCircle.revolveAround(orbitCx, orbitCy, ANGLE);
               }, ANGLEINTERVAL);
           break;
       }
@@ -111,16 +94,14 @@ function onKeyPress(ev) {
 }
 
 function onKeyUp() {
+  if(ANGLE>0) ANGLE -= ANGLEINC;
+  else ANGLE += ANGLEINC;
+  // console.log('keyup',ANGLE);
   clearInterval(keyPressInterval);
   keyPressInterval = undefined;
 }
 
 function onKeyDown(ev) {
-  console.log('state.pause', STATE.PAUSE);
-  console.log('sq.x', sq.x);
-  console.log('sq.y', sq.y);
-  console.log('redCircle.x', redCircle.x);
-  console.log('redCircle.x', redCircle.x);
   switch(ev.keyCode){
     case KEY.ESC:
       if(!STATE.PAUSE){
