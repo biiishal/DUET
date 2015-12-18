@@ -55,9 +55,7 @@ var redraw = function() {
    if(obstacles[i].onScreen)drawRectFill(obstacles[i]);
    // drawRectFill(obstacles[i]);
   }
-
-
-
+  
   window.requestAnimationFrame(redraw);
 };
 
