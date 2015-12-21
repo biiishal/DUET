@@ -11,7 +11,9 @@ var ANGLE = 0;
 var ANGLEINC = 0.8;
 var KEY = { LEFT:97, RIGHT:100, ESC:27 };
 var keyPressInterval;
-var STATE = { START: false, PLAY: false, PAUSE: false, HIT: false };
+var STATE = { START: 0, PLAY: 1, HIT: 2 };
+var GAMESTATE = STATE.START;
+var PAUSE = false;
 var gameLoop;
 var reverseInterval;
 
@@ -103,17 +105,17 @@ function onKeyUp() {
 function onKeyDown(ev) {
   switch(ev.keyCode){
     case KEY.ESC:
-      if(!STATE.PAUSE){
+      if(!PAUSE){
         clearInterval(gameLoop);
         document.removeEventListener('keypress', onKeyPress);
         document.removeEventListener('keyup', onKeyUp);
-        STATE.PAUSE = !STATE.PAUSE;
+        PAUSE = !PAUSE;
       }
       else {
         gameLoop = setInterval(game, GAMEINT);
         document.addEventListener('keypress', onKeyPress);
         document.addEventListener('keyup', onKeyUp);
-        STATE.PAUSE = !STATE.PAUSE;
+        PAUSE = !PAUSE;
       }     
   }
 }

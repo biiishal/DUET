@@ -22,31 +22,40 @@ document.addEventListener('keydown', onKeyDown);
 //initial call to canvas draw function
 window.requestAnimationFrame(redraw);
 
+var changeState = function() {
+	clearInterval(gameLoop);
+  gameLoop = setInterval(game, GAMEINT);
+}
+
 var game = function() {
-	switch(STATE.HIT) {
-		case false:
+	switch(GAMESTATE) {
+		case STATE.PLAY:
 			for(var i = 0; i < obstacles.length; i++) {
 		    obstacles[i].updatePos();
 		    if(cd.detectCollision(redCircle, obstacles[i])) {
-		    	STATE.HIT = true;
+		    	GAMESTATE = STATE.HIT;
 		    	obstacles[i].changeColor('red');
 		    } 
 		    if(cd.detectCollision(blueCircle, obstacles[i])) {
-		    	STATE.HIT = true;
+		    	GAMESTATE = STATE.HIT;
 		    	obstacles[i].changeColor('blue');
 		    } 
 	  	}
 	  	break;
 
-  	case true:
-  		clearInterval(gameLoop);
-  		gameLoop = setInterval(game, GAMEINT);
-
+  	case STATE.HIT:
+  		changeState();
   		for(var i = 0; i < obstacles.length; i++) {
-		   STATE.HIT = obstacles[i].reversePos();  
+  			redCircle.revolveAround(orbitCx, orbitCy, 1);
+  			blueCircle.revolveAround(orbitCx, orbitCy, 1);
+		   if(obstacles[i].reversePos()) GAMESTATE = STATE.PLAY;  
 	  	}
   		break;
+
+    case STATE.START:
+    	changeState();
+    	GAMESTATE = STATE.PLAY;
 	}
 }
 
-gameLoop = setInterval(game, GAMEINT);
+game();

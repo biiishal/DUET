@@ -42,9 +42,9 @@ Obstacle.prototype.reversePos = function() {
 	if(this.initialY <=this.y) {
 		this.y -=this.dy*4;
 		this.x -=this.dx*4;
-		return true;
+		return;
 	}
-	else return false;
+	else return true;
 }
 
 Obstacle.prototype.changeColor = function(color) {
