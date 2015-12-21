@@ -21,15 +21,6 @@ var Obstacle = function(dx, dy, fs) {
 };
 
 Obstacle.prototype.updatePos = function() {	
-	// if(this.y < 700) {
-	// 	//console.log('insdide updatePos', this.y);
-		// this.y +=this.dy;
-		// this.x +=this.dx;	
-	// 	this.onScreen = true;
-	// 	if(this.y < -200)this.onScreen = false;
-	// }
-	// else this.onScreen = false;
-
 	if(this.y < 700 && this. y > -200) this.onScreen = true;
 	else this.onScreen = false;
 	this.y +=this.dy;
