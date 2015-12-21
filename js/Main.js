@@ -12,6 +12,7 @@ var rectUpL = new RectangleUprightL(0, 1.2 );
 var rectHorzC = new RectangleHorzC(0,1.2, 'blue');
 
 var obstacles = [sq, rectUpR, rectUpL, rectHorzC];
+var cd = new CollisionDetector();
 
 //Adding keypress and keyup event listeners
 document.addEventListener('keypress', onKeyPress);
@@ -24,8 +25,8 @@ window.requestAnimationFrame(redraw);
 var game = function() {
 		for(var i = 0; i < obstacles.length; i++) {
     obstacles[i].updatePos();
-    // collisionDetector.testCollision(redCircle, obstacles[i]);
-    // collisionDetector.testCollision(blueCircle, obstacles[i]);
+    if(cd.detectCollision(redCircle, obstacles[i])) clearInterval(gameLoop);
+    if(cd.detectCollision(blueCircle, obstacles[i])) clearInterval(gameLoop);
   }
 }
 
