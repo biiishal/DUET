@@ -12,10 +12,8 @@ var Obstacle = function(dx, dy, fs) {
 	this.h;
 	this.dx = dy;
 	this.dy = dy;
-	this.left = this.x;
-	this.right = this.x + this.w;
-	this.top = this.y;
-	this.bottom = this.y + this.h;
+	this.initialX = this.x;
+	this.initialY = this.y;
 	this.onScreen = false;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
@@ -23,14 +21,34 @@ var Obstacle = function(dx, dy, fs) {
 };
 
 Obstacle.prototype.updatePos = function() {	
-	if(this.y < 700) {
-		//console.log('insdide updatePos', this.y);
-		this.y +=this.dy;
-		this.x +=this.dx;	
-		this.onScreen = true;
-		if(this.y < -200)this.onScreen = false;
-	}
+	// if(this.y < 700) {
+	// 	//console.log('insdide updatePos', this.y);
+		// this.y +=this.dy;
+		// this.x +=this.dx;	
+	// 	this.onScreen = true;
+	// 	if(this.y < -200)this.onScreen = false;
+	// }
+	// else this.onScreen = false;
+
+	if(this.y < 700 && this. y > -200) this.onScreen = true;
 	else this.onScreen = false;
+	this.y +=this.dy;
+	this.x +=this.dx;	
+}
+
+Obstacle.prototype.reversePos = function() {
+	if(this.y < 700 && this. y > -200) this.onScreen = true;
+	else this.onScreen = false;
+	if(this.initialY <=this.y) {
+		this.y -=this.dy*4;
+		this.x -=this.dx*4;
+		return true;
+	}
+	else return false;
+}
+
+Obstacle.prototype.changeColor = function(color) {
+	this.fs = color;
 }
 
 
@@ -42,10 +60,8 @@ var SquareStillCenter = function(dx, dy, fs) {
 	this.h = 80;
 	this.dx = dx;
 	this.dy = dy;
-	this.left = this.x;
-	this.right = this.x + this.w;
-	this.top = this.y;
-	this.bottom = this.y + this.h;
+	this.initialX = this.x;
+	this.initialY = this.y;
 	// this.onScreen = false;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
@@ -64,10 +80,8 @@ var RectangleUprightR = function(dx, dy, fs) {
 	this.h = 150;
 	this.dx = dx;
 	this.dy = dy;
-	this.left = this.x;
-	this.right = this.x + this.w;
-	this.top = this.y;
-	this.bottom = this.y + this.h;
+	this.initialX = this.x;
+	this.initialY = this.y;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
@@ -83,10 +97,8 @@ var RectangleUprightL = function(dx, dy, fs) {
 	this.h = 150;
 	this.dx = dx;
 	this.dy = dy;
-	this.left = this.x;
-	this.right = this.x + this.w;
-	this.top = this.y;
-	this.bottom = this.y + this.h;
+	this.initialX = this.x;
+	this.initialY = this.y;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
@@ -102,10 +114,8 @@ var RectangleHorzC = function(dx, dy, fs) {
 	this.h = 30;
 	this.dx = dx;
 	this.dy = dy;
-	this.left = this.x;
-	this.right = this.x + this.w;
-	this.top = this.y;
-	this.bottom = this.y + this.h;
+	this.initialX = this.x;
+	this.initialY = this.y;
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;

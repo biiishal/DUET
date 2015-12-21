@@ -13,6 +13,7 @@ var KEY = { LEFT:97, RIGHT:100, ESC:27 };
 var keyPressInterval;
 var STATE = { START: false, PLAY: false, PAUSE: false, HIT: false };
 var gameLoop;
+var reverseInterval;
 
 
 //CANVAS DRAWING UTILITY

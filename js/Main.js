@@ -23,11 +23,30 @@ document.addEventListener('keydown', onKeyDown);
 window.requestAnimationFrame(redraw);
 
 var game = function() {
-		for(var i = 0; i < obstacles.length; i++) {
-    obstacles[i].updatePos();
-    if(cd.detectCollision(redCircle, obstacles[i])) clearInterval(gameLoop);
-    if(cd.detectCollision(blueCircle, obstacles[i])) clearInterval(gameLoop);
-  }
+	switch(STATE.HIT) {
+		case false:
+			for(var i = 0; i < obstacles.length; i++) {
+		    obstacles[i].updatePos();
+		    if(cd.detectCollision(redCircle, obstacles[i])) {
+		    	STATE.HIT = true;
+		    	obstacles[i].changeColor('red');
+		    } 
+		    if(cd.detectCollision(blueCircle, obstacles[i])) {
+		    	STATE.HIT = true;
+		    	obstacles[i].changeColor('blue');
+		    } 
+	  	}
+	  	break;
+
+  	case true:
+  		clearInterval(gameLoop);
+  		gameLoop = setInterval(game, GAMEINT);
+
+  		for(var i = 0; i < obstacles.length; i++) {
+		   STATE.HIT = obstacles[i].reversePos();  
+	  	}
+  		break;
+	}
 }
 
 gameLoop = setInterval(game, GAMEINT);
