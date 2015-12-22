@@ -1,4 +1,4 @@
-var Drawer = function(canvas, redCircle, blueCircle, obstacles) {
+var Drawer = function(canvas, orbit, redCircle, blueCircle, obstacles) {
 	var ctx = canvas.getContext('2d');
 	var w = canvas.width;
 	var h = canvas.height;
