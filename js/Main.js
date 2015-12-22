@@ -1,3 +1,8 @@
+var canvas = document.getElementById('canvas');
+var orbitCx = canvas.width/2;
+var orbitCy = canvas.height/1.3;
+
+var GAMEINT = 1;
 //Create the player
 var orbit = new Orbit(orbitCx, orbitCy, 100, null, 'gray');
 var redCircle = new RedCircle(orbitCx-100, orbitCy, 10, 'red');
@@ -5,11 +10,6 @@ var blueCircle = new BlueCircle(orbitCx+100, orbitCy, 10, 'blue');
 console.log(orbit.r);
 
 
-//Create Test Obstacles
-// var sq = new SquareC(0, 1.2, -100, 'green');
-// var rectUpR = new RectangleUprightR(0, 1.2 );
-// var rectUpL = new RectangleUprightL(0, 1.2 );
-// var rectHorzC = new RectangleHorzC(0,1.2, 'blue');
 
 var obsFactory = new ObstacleFactory();
 
@@ -36,7 +36,8 @@ document.addEventListener('keyup', onKeyUp);
 document.addEventListener('keydown', onKeyDown);
 
 //initial call to canvas draw function
-window.requestAnimationFrame(redraw);
+var drawer = new Drawer(canvas, redCircle, blueCircle, obstacles);
+window.requestAnimationFrame(drawer.redraw);
 
 var changeState = function() {
 	clearInterval(gameLoop);
