@@ -5,12 +5,12 @@ var inheritsFrom = function (child, parent) {
 
 //Parent Obstacle Class
 
-var Obstacle = function(dx, dy, fs) {
+var Obstacle = function(dx, dy, y, fs) {
 	this.x; 
-	this.y;
+	this.y = y;
 	this.w;
 	this.h;
-	this.dx = dy;
+	this.dx = dx;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -44,12 +44,12 @@ Obstacle.prototype.changeColor = function(color) {
 
 
 //Square Obstacle
-var SquareStillCenter = function(dx, dy, fs) {
+var SquareC = function(dy, y, fs) {
 	this.x = 150;
-	this.y = -100;
+	this.y = y;
 	this.w = 80;
 	this.h = 80;
-	this.dx = dx;
+	this.dx=0;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -60,16 +60,16 @@ var SquareStillCenter = function(dx, dy, fs) {
 	
 	// SquareStillCenter.prototype.updatePos.call(this);
 }
-inheritsFrom(SquareStillCenter, Obstacle);
+inheritsFrom(SquareC, Obstacle);
 
 
 //Rectangle Upright Right
-var RectangleUprightR = function(dx, dy, fs) {
+var RectangleUprightR = function(dy, y, fs) {
 	this.x = 100;
-	this.y = -600;
+	this.y = y;
 	this.w = 30;
 	this.h = 150;
-	this.dx = dx;
+	this.dx = 0;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -81,12 +81,12 @@ inheritsFrom(RectangleUprightR, Obstacle);
 
 
 //Rectangle Upright Left
-var RectangleUprightL = function(dx, dy, fs) {
+var RectangleUprightL = function(dy, y, fs) {
 	this.x = 300;
-	this.y = -600;
+	this.y = y;
 	this.w = 30;
 	this.h = 150;
-	this.dx = dx;
+	this.dx = 0;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -97,13 +97,13 @@ var RectangleUprightL = function(dx, dy, fs) {
 inheritsFrom(RectangleUprightL, Obstacle);
 
 
-//Rectangle Upright Left
-var RectangleHorzC = function(dx, dy, fs) {
+//Rectangle Horizontol Center
+var RectangleHorzC = function(dy, y, fs) {
 	this.x = 150;
-	this.y = -1000;
+	this.y =  y;
 	this.w = 70;
 	this.h = 30;
-	this.dx = dx;
+	this.dx = 0;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -112,3 +112,35 @@ var RectangleHorzC = function(dx, dy, fs) {
 	this.spd = 5;
 };
 inheritsFrom(RectangleHorzC, Obstacle);
+
+//Rectangle Horizontol Left
+var RectangleHorzL = function(dy, y, fs) {
+	this.x = 0;
+	this.y =  y;
+	this.w = 150;
+	this.h = 30;
+	this.dx = 0;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;
+};
+inheritsFrom(RectangleHorzL, Obstacle);
+
+//Rectangle Horizontol Right
+var RectangleHorzR = function(dy, y, fs) {
+	this.x = 250;
+	this.y =  y;
+	this.w = 150;
+	this.h = 30;
+	this.dx = 0;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;
+};
+inheritsFrom(RectangleHorzR, Obstacle);

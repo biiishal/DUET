@@ -8,7 +8,7 @@ var orbitCy = h/1.3;
 
 var ANGLEINTERVAL = 15;
 var ANGLE = 0;
-var ANGLEINC = 0.8;
+var ANGLEINC = 0.9;
 var KEY = { LEFT:97, RIGHT:100, ESC:27 };
 var keyPressInterval;
 var STATE = { START: 0, PLAY: 1, HIT: 2 };
@@ -95,8 +95,8 @@ function onKeyPress(ev) {
 }
 
 function onKeyUp() {
-  if(ANGLE>0) ANGLE -= ANGLEINC;
-  else ANGLE += ANGLEINC;
+  if(ANGLE>0) ANGLE -= ANGLEINC*3;
+  else ANGLE += ANGLEINC*3;
   // console.log('keyup',ANGLE);
   clearInterval(keyPressInterval);
   keyPressInterval = undefined;
