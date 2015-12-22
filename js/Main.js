@@ -18,34 +18,34 @@ var Duet = function() {
 	var obstacles = [];
 	var collisionDetector;
 
-	var obs = [ {code: 'SC', IY: -100},
-							{code: 'RUL', IY: -400},
-							{code: 'RUR', IY: -600},
-							{code: 'RHL', IY: -800},
-							{code: 'RHL', IY: -1000},
-							{code: 'RHL', IY: -1200},
-							{code: 'RHR', IY: -1400},
-							{code: 'RHL', IY: -1600},
-							{code: 'RHR', IY: -1800},
-							{code: 'RHL', IY: -2000},
-							{code: 'RHR', IY: -2200},
-							{code: 'RHC', IY: -2400},
-							{code: 'SC', IY: -2600},
-							{code: 'RUL', IY: -3000},
-							{code: 'RUR', IY: -3200},
-							{code: 'RHR', IY: -3400},
-							{code: 'RHR', IY: -3600},
-							{code: 'RHR', IY: -3800},
-							{code: 'RHR', IY: -4000},
-							{code: 'RHL', IY: -4200},
-							{code: 'RHR', IY: -4400},
-							{code: 'RHL', IY: -4600},
-							{code: 'RHR', IY: -4800},
-							{code: 'RHC', IY: -5000}
-							];
-	console.log(obs);
-
-	var level = {SPD: 1.8, obs};
+	// var obs = [ {code: 'SC', IY: -100},
+	// 						{code: 'RUL', IY: -400},
+	// 						{code: 'RUR', IY: -600},
+	// 						{code: 'RHL', IY: -800},
+	// 						{code: 'RHL', IY: -1000},
+	// 						{code: 'RHL', IY: -1200},
+	// 						{code: 'RHR', IY: -1400},
+	// 						{code: 'RHL', IY: -1600},
+	// 						{code: 'RHR', IY: -1800},
+	// 						{code: 'RHL', IY: -2000},
+	// 						{code: 'RHR', IY: -2200},
+	// 						{code: 'RHC', IY: -2400},
+	// 						{code: 'SC', IY: -2600},
+	// 						{code: 'RUL', IY: -3000},
+	// 						{code: 'RUR', IY: -3200},
+	// 						{code: 'RHR', IY: -3400},
+	// 						{code: 'RHR', IY: -3600},
+	// 						{code: 'RHR', IY: -3800},
+	// 						{code: 'RHR', IY: -4000},
+	// 						{code: 'RHL', IY: -4200},
+	// 						{code: 'RHR', IY: -4400},
+	// 						{code: 'RHL', IY: -4600},
+	// 						{code: 'RHR', IY: -4800},
+	// 						{code: 'RHC', IY: -5000}
+	// 						];
+	// console.log(obs);
+	// var emp = JSON.parse('level.json');
+	var level = {SPD: 1.5, obs};
 
 	
 
@@ -66,7 +66,7 @@ var Duet = function() {
 
 		var obsFactory = new ObstacleFactory();
 		for(var i = 0; i<obs.length; i++) {
-		obstacles[i] = obsFactory.getObstacle(obs[i].code, level.SPD, obs[i].IY);
+		obstacles[i] = obsFactory.getObstacle(level.obs[i].code, level.SPD, level.obs[i].IY);
 		}
 
 		collisionDetector = new CollisionDetector();

@@ -131,7 +131,7 @@ inheritsFrom(RectangleHorzL, Obstacle);
 
 //Rectangle Horizontol Right
 var RectangleHorzR = function(dy, y, fs) {
-	this.x = 250;
+	this.x = 200;
 	this.y =  y;
 	this.w = 200;
 	this.h = 30;
