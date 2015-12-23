@@ -18,7 +18,8 @@ var Duet = function() {
 	var obstacles = [];
 	var collisionDetector;
 	var currentLevel = level[0];
-	console.log('level', level);
+	var playerData = {life: 5, score: 0};
+	console.log('playerData.life', playerData.life);
 	
 
 	this.load = function() {
@@ -33,7 +34,7 @@ var Duet = function() {
 		blueCircle = new BlueCircle(orbitCx+100, orbitCy, 10, 'blue');
 
 		//initial call to canvas draw function
-		var drawer = new Drawer(canvas, orbit, redCircle, blueCircle, obstacles);
+		var drawer = new Drawer(canvas, orbit, redCircle, blueCircle, obstacles, playerData);
 		window.requestAnimationFrame(drawer.redraw);
 
 		var obsFactory = new ObstacleFactory();
@@ -56,10 +57,12 @@ var Duet = function() {
 				for(var i = 0; i < obstacles.length; i++) {
 			    obstacles[i].updatePos();
 			    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
+			    	playerData.life--;
 			    	GAMESTATE = STATE.HIT;
 			    	obstacles[i].changeColor('red');
 			    } 
 			    if(collisionDetector.detectCollision(blueCircle, obstacles[i])) {
+			    	playerData.life--;
 			    	GAMESTATE = STATE.HIT;
 			    	obstacles[i].changeColor('blue');
 			    } 
