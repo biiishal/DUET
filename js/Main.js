@@ -1,4 +1,4 @@
-var STATE = { START: 0, PLAY: 1, HIT: 2 };
+var STATE = { START: 0, PLAY: 1, HIT: 2, OVER:3 };
 var KEY = { LEFT:97, RIGHT:100, ESC:27 };
 var GAMESTATE = STATE.START;
 var PAUSE = false;
@@ -17,6 +17,7 @@ var Duet = function() {
   var orbit, redCircle, blueCircle;
 	var obstacles = [];
 	var collisionDetector;
+	var scoreCounter = 0;
 	var currentLevel = level[0];
 	var playerData = {life: 5, score: 0};
 	console.log('playerData.life', playerData.life);
@@ -42,6 +43,8 @@ var Duet = function() {
 		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
 		}
 
+		// obstacles[0] = obsFactory.getObstacle('RHRR', 1.2, -100);
+
 		collisionDetector = new CollisionDetector();
 
 	}
@@ -54,6 +57,8 @@ var Duet = function() {
 	this.game = function() {
 		switch(GAMESTATE) {
 			case STATE.PLAY:
+			scoreCounter++;
+			if(scoreCounter%250 == 0)playerData.score++;
 				for(var i = 0; i < obstacles.length; i++) {
 			    obstacles[i].updatePos();
 			    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
@@ -70,17 +75,25 @@ var Duet = function() {
 		  	break;
 
 	  	case STATE.HIT:
-	  		changeState();
-	  		for(var i = 0; i < obstacles.length; i++) {
-	  			redCircle.revolveAround(orbitCx, orbitCy, .5);
-	  			blueCircle.revolveAround(orbitCx, orbitCy, .5);
-			   if(obstacles[i].reversePos()) GAMESTATE = STATE.PLAY;  
-		  	}
-	  		break;
+  		changeState();
+  		for(var i = 0; i < obstacles.length; i++) {
+  			redCircle.revolveAround(orbitCx, orbitCy, .5);
+  			blueCircle.revolveAround(orbitCx, orbitCy, .5);
+  			if(playerData.life == 0) GAMESTATE = STATE.OVER;
+		   if(obstacles[i].reversePos()) GAMESTATE = STATE.PLAY;  
+	  	}
+  		break;
 
 	    case STATE.START:
-	    	changeState();
-	    	GAMESTATE = STATE.PLAY;
+    	changeState();
+    	GAMESTATE = STATE.PLAY;
+    	break;
+
+	    case STATE.OVER:
+	    console.log('GAMESTATE', GAMESTATE);
+	    clearInterval(gameLoop);
+    	// changeState();
+    	// GAMESTATE = STATE.PLAY;
 		}
 	}
 

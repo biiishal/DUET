@@ -24,6 +24,10 @@ var ObstacleFactory = function(){
 			case 'RHR':
 			return(new RectangleHorzR(dy, initialY));
 			break;
+
+			// case 'RHRR':
+			// return(new RectangleHorzRRotate(dy, initialY));
+			// break;
 		}
 	}	
 }
