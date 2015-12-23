@@ -43,8 +43,10 @@ var Drawer = function(canvas, orbit, redCircle, blueCircle, obstacles, playerDat
 
 	this.redraw = function() {
 	  // paint bg
-	  ctx.fillStyle = 'black';
-	  ctx.fillRect(0, 0, w, h);
+	  // ctx.fillStyle = 'black';
+	  // ctx.fillRect(0, 0, w, h);
+	  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+		ctx.fillRect(0,0,canvas.width,canvas.height);
 
 	  //draw the circles
 	  drawCircleStroke(orbit);
