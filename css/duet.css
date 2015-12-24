@@ -8,15 +8,34 @@
 	position: absolute;
 	display: block;
 	margin: 0 auto;
-	left: 39%;
-	top: 50%;
+	left: 42%;
+	top: 300px;
 	height: 300px;
 	width: 300px;
 	background: none;
+	z-index: 10;
 }
 
 #screen-overlay p {
 	color: purple;
 	font-size: 26px;
 	text-align: center;
+}
+
+#touch-right {
+	position: absolute;;
+	width: 200px;
+	height: 600px;
+	top:0;
+	left: 50%;
+	z-index: 5;
+}
+
+#touch-left {
+	position: absolute;;
+	width: 200px;
+	height: 600px;
+	top:0;
+	left: 39%;
+	z-index: 5;
 }
