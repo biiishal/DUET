@@ -1,5 +1,5 @@
 var STATE = { START: 0, PLAY: 1, HIT: 2, OVER:3 };
-var KEY = { LEFT:97, RIGHT:100, ESC:27 };
+var KEY = { LEFT:97, RIGHT:100, ESC:27, SPACE:32 };
 var GAMESTATE = STATE.START;
 var PAUSE = false;
 
@@ -8,6 +8,10 @@ var Duet = function() {
 	var that = this;
 	var gameLoop;
 	var canvas = document.getElementById('canvas');
+	var screenOverlay;
+	var startMsg; 
+	var pauseMsg; 
+	var gameoverMsg;
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -38,10 +42,25 @@ var Duet = function() {
 		var drawer = new Drawer(canvas, orbit, redCircle, blueCircle, obstacles, playerData);
 		window.requestAnimationFrame(drawer.redraw);
 
+		//loading obstacles
 		var obsFactory = new ObstacleFactory();
 		for(var i = 0; i<currentLevel.obs.length; i++) {
 		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
 		}
+
+		//create start, pause and gameover screens
+		screenOverlay = document.createElement('div');
+		startMsg = document.createElement('p');
+		startMsg.innerHTML = "HIT 'SPACE' TO START";
+		screenOverlay.id = 'screen-overlay';
+
+		pauseMsg = document.createElement('p');
+
+		gameoverMsg = document.createElement('p');
+
+		screenOverlay.appendChild(startMsg);
+
+		document.body.appendChild(screenOverlay);
 
 		// obstacles[0] = obsFactory.getObstacle('RHRR', 1.2, -100);
 
@@ -99,7 +118,7 @@ var Duet = function() {
 
 	//EVENT LISTENING
   var onKeyPress = function(ev) {
-    // console.log("onKeyPress", ev.keyCode);
+    console.log("onKeyPress", ev.keyCode);
 
     if (!keyPressInterval) {
         switch(ev.keyCode){
@@ -148,7 +167,14 @@ var Duet = function() {
         document.addEventListener('keypress', onKeyPress);
         document.addEventListener('keyup', onKeyUp);
         PAUSE = !PAUSE;
-      }     
+      }  
+      break;
+
+      case KEY.SPACE:   
+      console.log('space pressed');
+      if(document.getElementById('screen-overlay'))document.body.removeChild(screenOverlay);
+      if(GAMESTATE == STATE.START)that.game();
+      break;
     }
   }
 }

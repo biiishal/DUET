@@ -1,4 +1,22 @@
 #canvas {
+	position: relative;
 	display: block;
 	margin: 0 auto;
+}
+
+#screen-overlay {
+	position: absolute;
+	display: block;
+	margin: 0 auto;
+	left: 39%;
+	top: 50%;
+	height: 300px;
+	width: 300px;
+	background: none;
+}
+
+#screen-overlay p {
+	color: purple;
+	font-size: 26px;
+	text-align: center;
 }

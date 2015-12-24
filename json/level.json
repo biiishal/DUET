@@ -24,6 +24,6 @@ var level = [{
 							{"code": "RHR", "IY": -4800},
 							{"code": "RHC", "IY": -5000}
 							], 
-		"SPD" : 1.2 
+		"SPD" : 1 
 	}
 	]
