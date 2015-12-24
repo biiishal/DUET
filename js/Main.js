@@ -93,12 +93,10 @@ var Duet = function() {
 			case STATE.PLAY:
 			scoreCounter++;
 			if(scoreCounter%250 == 0){playerData.score++;
-				// console.log('obstacles[obstacles.length-1]',obstacles[obstacles.length-1]);
 				if(obstacles[obstacles.length-1].crossedFinish()) GAMESTATE = STATE.LVLCLR;
 			}
 				for(var i = 0; i < obstacles.length; i++) {
 			    obstacles[i].updatePos();
-			    // console.log('obstacles[obstacles.length-1]',obstacles[obstacles.length-1]);
 			    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
 			    	playerData.life--;
 			    	GAMESTATE = STATE.HIT;
