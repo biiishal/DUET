@@ -7,12 +7,14 @@ var Duet = function() {
 	var that = this;
 	var gameLoop;
 	var canvas = document.getElementById('canvas');
+	var canvasContainer = document.getElementById('canvas-container');
 	var screenOverlay;
 	var screenMsg;
 	var MSG = {	START: "HIT SPACE TO START", 
 							PAUSE: "HIT ESC TO RESUME", 
 							OVER: "GAME OVER!", 
-							LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE"};
+							LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE",
+							NEWHS: "NEW HIGHSCORE: "};
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -25,7 +27,7 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 1, score: 0};
+	var playerData = {life: 1, score: 0, highScore: 0};
 	var obsFactory = new ObstacleFactory();
 
 
@@ -38,10 +40,11 @@ var Duet = function() {
 	}
 
 	var reset = function() {
+		obstacles.splice(0,obstacles.length);
 		levelCounter = 0;
 		currentLevel = level[levelCounter];
-		life = 1;
-
+		playerData.life = 1;
+		playerData.score = 0;
 	}
 	
 
@@ -72,7 +75,7 @@ var Duet = function() {
 		screenOverlay.appendChild(screenMsg);
 
 		screenMsg.innerHTML = MSG.START;
-		document.body.appendChild(screenOverlay);
+		canvasContainer.appendChild(screenOverlay);
 
 		// obstacles[0] = obsFactory.getObstacle('RHRR', 1.2, -100);
 
@@ -110,6 +113,7 @@ var Duet = function() {
 		  	break;
 
 	  	case STATE.HIT:
+	  	console.log('GAMESTATE', GAMESTATE);
   		changeState();
   		for(var i = 0; i < obstacles.length; i++) {
   			redCircle.revolveAround(orbitCx, orbitCy, .5);
@@ -120,6 +124,7 @@ var Duet = function() {
   		break;
 
 	    case STATE.START:
+	    console.log('GAMESTATE', GAMESTATE);
 	    if(level[levelCounter])loadLevel();
 	    else MSG.LVLCLR = 'NO MORE LEVELS';
     	changeState();
@@ -127,16 +132,22 @@ var Duet = function() {
     	break;
 
 	    case STATE.OVER:
+	    console.log('GAMESTATE', GAMESTATE);
 	    clearInterval(gameLoop);
-	    screenMsg.innerHTML = MSG.OVER;
-			document.body.appendChild(screenOverlay);
+	    if(playerData.score > playerData.highScore) {
+	    	playerData.highScore = playerData.score;
+	    	screenMsg.innerHTML = MSG.OVER + ' <p>' +MSG.NEWHS+ playerData.highScore + '</p>'; 
+	    }
+	    else screenMsg.innerHTML = MSG.OVER;
+			canvasContainer.appendChild(screenOverlay);
 			break;
 
 
     	case STATE.LVLCLR:
+    	console.log('GAMESTATE', GAMESTATE);
     	currentLevel = level[++levelCounter];
     	screenMsg.innerHTML = MSG.LVLCLR;
-			document.body.appendChild(screenOverlay);
+			canvasContainer.appendChild(screenOverlay);
     	clearInterval(gameLoop);
     	GAMESTATE = STATE.START;
     	// document.body.removeChild(screenOverlay);
@@ -146,7 +157,7 @@ var Duet = function() {
 
 	//EVENT LISTENING
   var onKeyPress = function(ev) {
-    console.log("onKeyPress", ev.keyCode);
+    // console.log("onKeyPress", ev.keyCode);
 
     if (!keyPressInterval) {
         switch(ev.keyCode){
@@ -202,9 +213,10 @@ var Duet = function() {
 
       case KEY.SPACE:   
       // console.log('space pressed');
-      if(document.getElementById('screen-overlay'))document.body.removeChild(screenOverlay);
+      if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
+      	reset();
       	GAMESTATE = STATE.START;
       	changeState();
       }
