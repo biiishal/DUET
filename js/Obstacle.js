@@ -31,8 +31,8 @@ Obstacle.prototype.reversePos = function() {
 	if(this.y < 700 && this. y > -200) this.onScreen = true;
 	else this.onScreen = false;
 	if(this.initialY <=this.y) {
-		this.y -=this.dy*4;
-		this.x -=this.dx*4;
+		this.y -=15;
+		// this.x -=10;
 		return;
 	}
 	else return true;
