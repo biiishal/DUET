@@ -10,7 +10,10 @@ var Duet = function() {
 	var canvas = document.getElementById('canvas');
 	var screenOverlay;
 	var screenMsg;
-	var MSG = {START: "HIT SPACE TO START", PAUSE: "HIT ESC TO RESUME", OVER: "GAME OVER!"};
+	var MSG = {	START: "HIT SPACE TO START", 
+							PAUSE: "HIT ESC TO RESUME", 
+							OVER: "GAME OVER!", 
+							LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE"};
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -23,7 +26,7 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 5, score: 0};
+	var playerData = {life: 1, score: 0};
 	var obsFactory = new ObstacleFactory();
 
 
@@ -33,6 +36,13 @@ var Duet = function() {
 		for(var i = 0; i<currentLevel.obs.length; i++) {
 		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
 		}
+	}
+
+	var reset = function() {
+		levelCounter = 0;
+		currentLevel = level[levelCounter];
+		life = 1;
+
 	}
 	
 
@@ -57,18 +67,16 @@ var Duet = function() {
 		// obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
 		// }
 
-		loadLevel();
 
 		//create start, pause and gameover screens
 		screenOverlay = document.createElement('div');
 		screenMsg = document.createElement('p');
-		screenMsg.innerHTML = "HIT 'SPACE' TO START";
 		screenOverlay.id = 'screen-overlay';
 
 		screenMsg = document.createElement('p');
-		screenMsg.innerHTML = MSG.START;
 		screenOverlay.appendChild(screenMsg);
 
+		screenMsg.innerHTML = MSG.START;
 		document.body.appendChild(screenOverlay);
 
 		// obstacles[0] = obsFactory.getObstacle('RHRR', 1.2, -100);
@@ -117,30 +125,33 @@ var Duet = function() {
   		break;
 
 	    case STATE.START:
+	    if(level[levelCounter])loadLevel();
+	    else MSG.LVLCLR = 'NO MORE LEVELS';
     	changeState();
     	GAMESTATE = STATE.PLAY;
     	break;
 
 	    case STATE.OVER:
-	    console.log('GAMESTATE', GAMESTATE);
 	    clearInterval(gameLoop);
-    	// changeState();
-    	// GAMESTATE = STATE.PLAY;
+	    screenMsg.innerHTML = MSG.OVER;
+			document.body.appendChild(screenOverlay);
+			break;
+
 
     	case STATE.LVLCLR:
-    	console.log('GAMESTATE', GAMESTATE);
     	currentLevel = level[++levelCounter];
-    	loadLevel();
-    	console.log('currentLevel', currentLevel);
-    	changeState();
-    	setTimeout(GAMESTATE = STATE.PLAY, 3000);
+    	screenMsg.innerHTML = MSG.LVLCLR;
+			document.body.appendChild(screenOverlay);
+    	clearInterval(gameLoop);
+    	GAMESTATE = STATE.START;
+    	// document.body.removeChild(screenOverlay);
     	break;
 		}
 	}
 
 	//EVENT LISTENING
   var onKeyPress = function(ev) {
-    console.log("onKeyPress", ev.keyCode);
+    // console.log("onKeyPress", ev.keyCode);
 
     if (!keyPressInterval) {
         switch(ev.keyCode){
@@ -193,9 +204,13 @@ var Duet = function() {
       break;
 
       case KEY.SPACE:   
-      console.log('space pressed');
+      // console.log('space pressed');
       if(document.getElementById('screen-overlay'))document.body.removeChild(screenOverlay);
       if(GAMESTATE == STATE.START)that.game();
+      if(GAMESTATE == STATE.OVER){
+      	GAMESTATE = STATE.START;
+      	changeState();
+      }
       break;
     }
   }
