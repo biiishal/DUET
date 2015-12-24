@@ -1,4 +1,4 @@
-var STATE = { START: 0, PLAY: 1, HIT: 2, OVER:3 };
+var STATE = { START: 0, PLAY: 1, HIT: 2, OVER:3, LVLCLR:4 };
 var KEY = { LEFT:97, RIGHT:100, ESC:27, SPACE:32 };
 var GAMESTATE = STATE.START;
 var PAUSE = false;
@@ -9,9 +9,8 @@ var Duet = function() {
 	var gameLoop;
 	var canvas = document.getElementById('canvas');
 	var screenOverlay;
-	var startMsg; 
-	var pauseMsg; 
-	var gameoverMsg;
+	var screenMsg;
+	var MSG = {START: "HIT SPACE TO START", PAUSE: "HIT ESC TO RESUME", OVER: "GAME OVER!"};
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -22,9 +21,19 @@ var Duet = function() {
 	var obstacles = [];
 	var collisionDetector;
 	var scoreCounter = 0;
-	var currentLevel = level[0];
+	var levelCounter = 0;
+	var currentLevel = level[levelCounter];
 	var playerData = {life: 5, score: 0};
-	console.log('playerData.life', playerData.life);
+	var obsFactory = new ObstacleFactory();
+
+
+	var loadLevel = function() {	
+			//loading obstacles
+	
+		for(var i = 0; i<currentLevel.obs.length; i++) {
+		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
+		}
+	}
 	
 
 	this.load = function() {
@@ -42,23 +51,23 @@ var Duet = function() {
 		var drawer = new Drawer(canvas, orbit, redCircle, blueCircle, obstacles, playerData);
 		window.requestAnimationFrame(drawer.redraw);
 
-		//loading obstacles
-		var obsFactory = new ObstacleFactory();
-		for(var i = 0; i<currentLevel.obs.length; i++) {
-		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
-		}
+		// //loading obstacles
+		// var obsFactory = new ObstacleFactory();
+		// for(var i = 0; i<currentLevel.obs.length; i++) {
+		// obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
+		// }
+
+		loadLevel();
 
 		//create start, pause and gameover screens
 		screenOverlay = document.createElement('div');
-		startMsg = document.createElement('p');
-		startMsg.innerHTML = "HIT 'SPACE' TO START";
+		screenMsg = document.createElement('p');
+		screenMsg.innerHTML = "HIT 'SPACE' TO START";
 		screenOverlay.id = 'screen-overlay';
 
-		pauseMsg = document.createElement('p');
-
-		gameoverMsg = document.createElement('p');
-
-		screenOverlay.appendChild(startMsg);
+		screenMsg = document.createElement('p');
+		screenMsg.innerHTML = MSG.START;
+		screenOverlay.appendChild(screenMsg);
 
 		document.body.appendChild(screenOverlay);
 
@@ -77,9 +86,13 @@ var Duet = function() {
 		switch(GAMESTATE) {
 			case STATE.PLAY:
 			scoreCounter++;
-			if(scoreCounter%250 == 0)playerData.score++;
+			if(scoreCounter%250 == 0){playerData.score++;
+				// console.log('obstacles[obstacles.length-1]',obstacles[obstacles.length-1]);
+				if(obstacles[obstacles.length-1].crossedFinish()) GAMESTATE = STATE.LVLCLR;
+			}
 				for(var i = 0; i < obstacles.length; i++) {
 			    obstacles[i].updatePos();
+			    // console.log('obstacles[obstacles.length-1]',obstacles[obstacles.length-1]);
 			    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
 			    	playerData.life--;
 			    	GAMESTATE = STATE.HIT;
@@ -113,6 +126,15 @@ var Duet = function() {
 	    clearInterval(gameLoop);
     	// changeState();
     	// GAMESTATE = STATE.PLAY;
+
+    	case STATE.LVLCLR:
+    	console.log('GAMESTATE', GAMESTATE);
+    	currentLevel = level[++levelCounter];
+    	loadLevel();
+    	console.log('currentLevel', currentLevel);
+    	changeState();
+    	setTimeout(GAMESTATE = STATE.PLAY, 3000);
+    	break;
 		}
 	}
 

@@ -38,6 +38,11 @@ Obstacle.prototype.reversePos = function() {
 	else return true;
 }
 
+Obstacle.prototype.crossedFinish = function() {
+	if(this.y > 600) return true;
+	else return false;
+}
+
 Obstacle.prototype.changeColor = function(color) {
 	this.fs = color;
 }
