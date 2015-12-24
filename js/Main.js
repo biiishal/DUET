@@ -1,7 +1,6 @@
 var Duet = function() {
 	var STATE = { START: 0, PLAY: 1, HIT: 2, OVER:3, LVLCLR:4 };
 	var KEY = { LEFT:97, RIGHT:100, ESC:27, SPACE:32 };
-	var TOUCH = { LEFT: 'touch-left', RIGHT: 'touch-right'};
 	var GAMESTATE = STATE.START;
 	var PAUSE = false;
 	var GAMEINT = 1;
@@ -78,21 +77,6 @@ var Duet = function() {
 		// obstacles[0] = obsFactory.getObstacle('RHRR', 1.2, -100);
 
 		collisionDetector = new CollisionDetector();
-
-		//create touch areas
-		touchLeft = document.createElement('div');
-		touchRight = document.createElement('div');
-		touchLeft.id = 'touch-left';
-		touchRight.id = 'touch-right';
-
-		touchLeft.addEventListener('touchstart', onTouchStart);
-		touchLeft.addEventListener('touchend', onTouchEnd);
-		touchRight.addEventListener('touchstart', onTouchStart);
-		touchRight.addEventListener('touchend', onTouchEnd);
-
-
-		document.body.appendChild(touchLeft);
-		document.body.appendChild(touchRight);
 
 	}
 
@@ -226,43 +210,5 @@ var Duet = function() {
       }
       break;
     }
-  }
-
-  var onTouchStart = function(ev) {
-  	console.log('touch start', ev.path[0].id);
-  	if (!keyPressInterval) {
-        switch(ev.path[0].id){
-            case TOUCH.LEFT:
-            		console.log('left');
-                keyPressInterval = setInterval(function() {
-                // console.log('first',angle);
-                if(angle < 5)
-                angle += angleIncr;
-                redCircle.revolveAround(orbitCx, orbitCy, angle);
-                blueCircle.revolveAround(orbitCx, orbitCy, angle);
-                }, angleInterval);
-            break;
-
-            case TOUCH.RIGHT:
-            		console.log('right');
-                keyPressInterval = setInterval(function() {
-                  // console.log('first',angle);
-                if(angle > -5)
-                angle -= angleIncr;
-                redCircle.revolveAround(orbitCx, orbitCy, angle);
-                blueCircle.revolveAround(orbitCx, orbitCy, angle);
-                }, angleInterval);
-            break;
-        }
-    }
-  }
-
-  var onTouchEnd = function(ev) {
-  	console.log('touch end');
-  	if(angle>0) angle -= angleIncr*3;
-    else angle += angleIncr*3;
-    // console.log('keyup',angle);
-    clearInterval(keyPressInterval);
-    keyPressInterval = undefined;
   }
 }

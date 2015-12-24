@@ -21,21 +21,3 @@
 	font-size: 26px;
 	text-align: center;
 }
-
-#touch-right {
-	position: absolute;;
-	width: 200px;
-	height: 600px;
-	top:0;
-	left: 50%;
-	z-index: 5;
-}
-
-#touch-left {
-	position: absolute;;
-	width: 200px;
-	height: 600px;
-	top:0;
-	left: 39%;
-	z-index: 5;
-}
