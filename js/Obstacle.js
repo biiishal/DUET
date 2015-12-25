@@ -211,6 +211,24 @@ var RectangleHorzCRight = function(dy, y, fs) {
 };
 inheritsFrom(RectangleHorzCRight, Obstacle);
 
+//Rectangle Horizontol Center Moving Left
+var RectangleHorzCLeft = function(dy, y, fs) {
+	this.x = 150;
+	this.y =  y;
+	this.w = 70;
+	this.h = 30;
+	this.dx = -0.17;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;
+	this.counter = 0;
+	this.beating = false;
+};
+inheritsFrom(RectangleHorzCLeft, Obstacle);
+
 //Rectangle Horizontol Left
 var RectangleHorzL = function(dy, y, fs) {
 	this.x = 0;

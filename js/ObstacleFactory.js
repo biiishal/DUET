@@ -29,6 +29,10 @@ var ObstacleFactory = function(){
 			return(new RectangleHorzCRight(dy, initialY));
 			break;
 
+			case 'RHCL':
+			return(new RectangleHorzCLeft(dy, initialY));
+			break;
+
 			case 'RHL':
 			return(new RectangleHorzL(dy, initialY));
 			break;
