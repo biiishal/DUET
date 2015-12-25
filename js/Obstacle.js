@@ -19,7 +19,7 @@ var Obstacle = function(dx, dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;	
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 };
 
 Obstacle.prototype.updatePos = function() {	
@@ -31,12 +31,12 @@ Obstacle.prototype.updatePos = function() {
 	// console.log('counter', this.counter);
 
 	if(this.counter == 312) {
-		if(!this.beat) {
+		if(!this.beating) {
 			this.x -= 1;
 			this.y -= 1;
 			this.w += 2;
 			this.h += 2;
-			this.beat = true;
+			this.beating = true;
 			this.counter = 0;
 		}
 		else{
@@ -44,7 +44,7 @@ Obstacle.prototype.updatePos = function() {
 			this.y += 1;
 			this.w -= 2;
 			this.h -= 2;
-			this.beat = false;
+			this.beating = false;
 			this.counter = 0;
 		}
 	}
@@ -87,7 +87,7 @@ var SquareC = function(dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;	
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 	
 	// SquareStillCenter.prototype.updatePos.call(this);
 }
@@ -108,7 +108,7 @@ var RectangleUprightR = function(dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 };
 inheritsFrom(RectangleUprightR, Obstacle);
 
@@ -127,7 +127,7 @@ var RectangleUprightL = function(dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 };
 inheritsFrom(RectangleUprightL, Obstacle);
 
@@ -146,7 +146,7 @@ var RectangleHorzC = function(dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 };
 inheritsFrom(RectangleHorzC, Obstacle);
 
@@ -164,7 +164,7 @@ var RectangleHorzL = function(dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 };
 inheritsFrom(RectangleHorzL, Obstacle);
 
@@ -182,6 +182,6 @@ var RectangleHorzR = function(dy, y, fs) {
 	else this.fs = fs;
 	this.spd = 5;
 	this.counter = 0;
-	this.beat = false;
+	this.beating = false;
 };
 inheritsFrom(RectangleHorzR, Obstacle);

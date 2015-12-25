@@ -30,15 +30,21 @@ var Drawer = function(canvas, orbit, redCircle, blueCircle, obstacles, playerDat
 	}
 
 	var drawScore = function(score) {
-		ctx.font = "22px Georgia";
+		ctx.font = "14px Georgia";
 		ctx.fillStyle = "green";
-		ctx.fillText("Score: " + score,280,20);
+		ctx.fillText("SCORE: " + score,280,20);
 	}
 
 	var drawLife = function(life) {
-		ctx.font = "22px Georgia";
+		ctx.font = "14px Georgia";
 		ctx.fillStyle = "green";
-		ctx.fillText("Life: " + life,10,20);
+		ctx.fillText("LIFE: " + life,10,20);
+	}
+
+	var drawLevel = function(level) {
+		ctx.font = "14px Georgia";
+		ctx.fillStyle = "green";
+		ctx.fillText("LEVEL: " + level,150,20);
 	}
 
 	this.redraw = function() {
@@ -59,6 +65,7 @@ var Drawer = function(canvas, orbit, redCircle, blueCircle, obstacles, playerDat
 
 	  drawScore(playerData.score);
 	  drawLife(playerData.life);
+	  drawLevel(playerData.level);
 	  
 	  window.requestAnimationFrame(that.redraw);
 	};

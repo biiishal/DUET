@@ -27,7 +27,7 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 2, score: 0, highScore: 0};
+	var playerData = {life: 2, score: 0, highScore: 0, level: 1};
 	var obsFactory = new ObstacleFactory();
 
 
@@ -144,6 +144,7 @@ var Duet = function() {
     	case STATE.LVLCLR:
     	console.log('GAMESTATE', GAMESTATE);
     	currentLevel = level[++levelCounter];
+    	playerData.level += 1;
     	screenMsg.innerHTML = MSG.LVLCLR;
 			canvasContainer.appendChild(screenOverlay);
     	clearInterval(gameLoop);
