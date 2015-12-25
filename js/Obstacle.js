@@ -30,6 +30,9 @@ Obstacle.prototype.updatePos = function() {
 	// console.log(this.w, this.h);
 	// console.log('counter', this.counter);
 
+	if(this.dx != 0)
+	{if(this.x+this.w >= 400 || this.x <= 0) this.dx = this.dx * -1;}
+
 	if(this.counter == 312) {
 		if(!this.beating) {
 			this.x -= 1;
@@ -93,6 +96,46 @@ var SquareC = function(dy, y, fs) {
 }
 inheritsFrom(SquareC, Obstacle);
 
+//Square Obstacle Center Moving Right
+var SquareCRight = function(dy, y, fs) {
+	this.x = 150;
+	this.y = y;
+	this.w = 80;
+	this.h = 80;
+	this.dx = 0.2;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	// this.onScreen = false;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;	
+	this.counter = 0;
+	this.beating = false;
+	
+// 	Obstacle.prototype.updatePos.call(this);
+}
+inheritsFrom(SquareCRight, Obstacle);
+
+//Square Obstacle Center Moving Left
+var SquareCLeft = function(dy, y, fs) {
+	this.x = 150;
+	this.y = y;
+	this.w = 80;
+	this.h = 80;
+	this.dx = -0.2;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	// this.onScreen = false;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;	
+	this.counter = 0;
+	this.beating = false;
+}
+inheritsFrom(SquareCLeft, Obstacle);
+
 
 //Rectangle Upright Right
 var RectangleUprightR = function(dy, y, fs) {
@@ -149,6 +192,24 @@ var RectangleHorzC = function(dy, y, fs) {
 	this.beating = false;
 };
 inheritsFrom(RectangleHorzC, Obstacle);
+
+//Rectangle Horizontol Center Moving Right
+var RectangleHorzCRight = function(dy, y, fs) {
+	this.x = 150;
+	this.y =  y;
+	this.w = 70;
+	this.h = 30;
+	this.dx = 0.17;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;
+	this.counter = 0;
+	this.beating = false;
+};
+inheritsFrom(RectangleHorzCRight, Obstacle);
 
 //Rectangle Horizontol Left
 var RectangleHorzL = function(dy, y, fs) {

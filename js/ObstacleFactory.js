@@ -5,6 +5,14 @@ var ObstacleFactory = function(){
 			return(new SquareC(dy, initialY));
 			break;
 
+			case 'SCR':
+			return(new SquareCRight(dy, initialY));
+			break;
+
+			case 'SCL':
+			return(new SquareCLeft(dy, initialY));
+			break;
+
 			case 'RUL':
 			return(new RectangleUprightL(dy, initialY));
 			break;
@@ -15,6 +23,10 @@ var ObstacleFactory = function(){
 
 			case 'RHC':
 			return(new RectangleHorzC(dy, initialY));
+			break;
+
+			case 'RHCR':
+			return(new RectangleHorzCRight(dy, initialY));
 			break;
 
 			case 'RHL':
