@@ -27,7 +27,7 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 1, score: 0, highScore: 0};
+	var playerData = {life: 2, score: 0, highScore: 0};
 	var obsFactory = new ObstacleFactory();
 
 
@@ -43,7 +43,7 @@ var Duet = function() {
 		obstacles.splice(0,obstacles.length);
 		levelCounter = 0;
 		currentLevel = level[levelCounter];
-		playerData.life = 1;
+		playerData.life = 2;
 		playerData.score = 0;
 	}
 	
