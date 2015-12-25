@@ -25,7 +25,7 @@ var level = [
 					// {"code": "RHR", "IY": -4800},
 					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 1 
+		"SPD" : .6
 	},
 
 	{"obs": [ {"code": "SC", "IY": -100},
@@ -53,7 +53,7 @@ var level = [
 					// {"code": "RHR", "IY": -4800},
 					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 1.2 
+		"SPD" : .7
 	},
 
 
@@ -82,7 +82,7 @@ var level = [
 					// {"code": "RHR", "IY": -4800},
 					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 1.4 
+		"SPD" : .7
 	}
 
 

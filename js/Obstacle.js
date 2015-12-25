@@ -18,6 +18,8 @@ var Obstacle = function(dx, dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;	
+	this.counter = 0;
+	this.beat = false;
 };
 
 Obstacle.prototype.updatePos = function() {	
@@ -25,6 +27,28 @@ Obstacle.prototype.updatePos = function() {
 	else this.onScreen = false;
 	this.y +=this.dy;
 	this.x +=this.dx;	
+	// console.log(this.w, this.h);
+	// console.log('counter', this.counter);
+
+	if(this.counter == 312) {
+		if(!this.beat) {
+			this.x -= 1;
+			this.y -= 1;
+			this.w += 2;
+			this.h += 2;
+			this.beat = true;
+			this.counter = 0;
+		}
+		else{
+			this.x += 1;
+			this.y += 1;
+			this.w -= 2;
+			this.h -= 2;
+			this.beat = false;
+			this.counter = 0;
+		}
+	}
+	this.counter++;
 }
 
 Obstacle.prototype.reversePos = function() {
@@ -62,6 +86,8 @@ var SquareC = function(dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;	
+	this.counter = 0;
+	this.beat = false;
 	
 	// SquareStillCenter.prototype.updatePos.call(this);
 }
@@ -81,6 +107,8 @@ var RectangleUprightR = function(dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
+	this.counter = 0;
+	this.beat = false;
 };
 inheritsFrom(RectangleUprightR, Obstacle);
 
@@ -98,6 +126,8 @@ var RectangleUprightL = function(dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
+	this.counter = 0;
+	this.beat = false;
 };
 inheritsFrom(RectangleUprightL, Obstacle);
 
@@ -115,6 +145,8 @@ var RectangleHorzC = function(dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
+	this.counter = 0;
+	this.beat = false;
 };
 inheritsFrom(RectangleHorzC, Obstacle);
 
@@ -131,6 +163,8 @@ var RectangleHorzL = function(dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
+	this.counter = 0;
+	this.beat = false;
 };
 inheritsFrom(RectangleHorzL, Obstacle);
 
@@ -147,5 +181,7 @@ var RectangleHorzR = function(dy, y, fs) {
 	if(!fs)this.fs = 'white';
 	else this.fs = fs;
 	this.spd = 5;
+	this.counter = 0;
+	this.beat = false;
 };
 inheritsFrom(RectangleHorzR, Obstacle);

@@ -30,20 +30,20 @@ var Drawer = function(canvas, orbit, redCircle, blueCircle, obstacles, playerDat
 	}
 
 	var drawScore = function(score) {
-		ctx.font = "22px Arial";
-		ctx.fillStyle = "white";
-		ctx.fillText("Score: " + score,230,50);
+		ctx.font = "22px Georgia";
+		ctx.fillStyle = "green";
+		ctx.fillText("Score: " + score,280,20);
 	}
 
 	var drawLife = function(life) {
-		ctx.font = "22px Arial";
-		ctx.fillStyle = "white";
-		ctx.fillText("Life: " + life,10,50);
+		ctx.font = "22px Georgia";
+		ctx.fillStyle = "green";
+		ctx.fillText("Life: " + life,10,20);
 	}
 
 	this.redraw = function() {
 	  // paint bg
-	  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+	  ctx.fillStyle = 'rgba(0,0,0,0.3)';
 		ctx.fillRect(0,0,canvas.width,canvas.height);
 
 	  //draw the circles
