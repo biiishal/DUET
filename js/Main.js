@@ -229,6 +229,15 @@ var Duet = function() {
   var onTouchStart = function(ev) {
   	ev.preventDefault();
   	console.log('canvas touch start');
+  	 if (!keyPressInterval) { 
+                keyPressInterval = setInterval(function() {
+                // console.log('first',angle);
+                if(angle < 5)
+                angle += angleIncr;
+                redCircle.revolveAround(orbitCx, orbitCy, angle);
+                blueCircle.revolveAround(orbitCx, orbitCy, angle);
+                }, angleInterval);
+        }
   }
 
   var onTouchEnd = function(ev) {
