@@ -33,7 +33,7 @@
 #btn-continue {
 	position: absolute;
 	background: red;
-	top:50%;
-	left: 30%;
-	z-index: 20;
+	padding:5px;
+	top:40%;
+	left: 38%;
 }

@@ -9,9 +9,10 @@ var Duet = function() {
 	var canvas = document.getElementById('canvas');
 	var canvasContainer = document.getElementById('canvas-container');
 	var screenOverlay;
+	var btnContinue;
 	var screenMsg;
 	var MSG = {	START: "HIT SPACE TO START", 
-							PAUSE: "HIT ESC TO RESUME", 
+							PAUSE: "GAME PAUSED", 
 							OVER: "GAME OVER!", 
 							LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE",
 							NEWHS: "NEW HIGHSCORE: "};
@@ -30,7 +31,7 @@ var Duet = function() {
 	var playerData = {life: 2, score: 0, highScore: 0, level: 1};
 	var obsFactory = new ObstacleFactory();
 	var rect = canvas.getBoundingClientRect();
-	var btnContinue = document.getElementById('btn-continue');
+
 
 
 	var loadLevel = function() {	
@@ -47,6 +48,7 @@ var Duet = function() {
 		currentLevel = level[levelCounter];
 		playerData.life = 2;
 		playerData.score = 0;
+		playerData.level = 1;
 	}
 	
 
@@ -58,9 +60,7 @@ var Duet = function() {
 
 		//Set Touch event listeners
 		canvas.addEventListener('touchstart', onTouchStart, false);
-		canvas.addEventListener('touchend', onTouchEnd, false);
-		btnContinue.addEventListener('click', onContinue);
-		
+		canvas.addEventListener('touchend', onTouchEnd, false);		
 
 		//Create the player
 		orbit = new Orbit(orbitCx, orbitCy, 100, null, 'gray');
@@ -74,11 +74,16 @@ var Duet = function() {
 
 		//create start, pause and gameover screens
 		screenOverlay = document.createElement('div');
-		screenMsg = document.createElement('p');
 		screenOverlay.id = 'screen-overlay';
+		
+		btnContinue = document.createElement('div');
+		btnContinue.id = 'btn-continue';		
 
 		screenMsg = document.createElement('p');
 		screenOverlay.appendChild(screenMsg);
+		canvasContainer.appendChild(btnContinue);
+		btnContinue.innerHTML = 'START';
+		btnContinue.addEventListener('click', onContinue);
 
 		screenMsg.innerHTML = MSG.START;
 		canvasContainer.appendChild(screenOverlay);
@@ -153,6 +158,8 @@ var Duet = function() {
     	playerData.level += 1;
     	screenMsg.innerHTML = MSG.LVLCLR;
 			canvasContainer.appendChild(screenOverlay);
+			btnContinue.innerHTML = 'START';
+			canvasContainer.appendChild(btnContinue);
     	clearInterval(gameLoop);
     	GAMESTATE = STATE.START;
     	// document.body.removeChild(screenOverlay);
@@ -205,9 +212,15 @@ var Duet = function() {
 	        clearInterval(gameLoop);
 	        document.removeEventListener('keypress', onKeyPress);
 	        document.removeEventListener('keyup', onKeyUp);
+	        screenMsg.innerHTML = MSG.PAUSE;
+	        btnContinue.innerHTML = 'RESUME';
+	        canvasContainer.appendChild(screenOverlay);
+	        canvasContainer.appendChild(btnContinue);
 	        PAUSE = !PAUSE;
 	      }
 	      else {
+	      	if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+  	 			if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
 	        gameLoop = setInterval(that.game, GAMEINT);
 	        document.addEventListener('keypress', onKeyPress);
 	        document.addEventListener('keyup', onKeyUp);
@@ -259,5 +272,12 @@ var Duet = function() {
       	GAMESTATE = STATE.START;
       	changeState();
       }
+
+      if(PAUSE){
+	        gameLoop = setInterval(that.game, GAMEINT);
+	        document.addEventListener('keypress', onKeyPress);
+	        document.addEventListener('keyup', onKeyUp);
+	        PAUSE = !PAUSE;
+	      }  
   }
 }
