@@ -29,6 +29,7 @@ var Duet = function() {
 	var currentLevel = level[levelCounter];
 	var playerData = {life: 2, score: 0, highScore: 0, level: 1};
 	var obsFactory = new ObstacleFactory();
+	var rect = canvas.getBoundingClientRect();
 
 
 	var loadLevel = function() {	
@@ -55,8 +56,8 @@ var Duet = function() {
 		document.addEventListener('keydown', onKeyDown);
 
 		//Set Touch event listeners
-		canvas.addEventListener('touchstart', onTouchStart);
-		canvas.addEventListener('touchend', onTouchEnd);
+		canvas.addEventListener('touchstart', onTouchStart, false);
+		canvas.addEventListener('touchend', onTouchEnd, false);
 		
 
 		//Create the player
@@ -228,20 +229,36 @@ var Duet = function() {
 
   var onTouchStart = function(ev) {
   	ev.preventDefault();
-  	console.log('canvas touch start');
-  	 if (!keyPressInterval) { 
-                keyPressInterval = setInterval(function() {
-                // console.log('first',angle);
-                if(angle < 5)
-                angle += angleIncr;
-                redCircle.revolveAround(orbitCx, orbitCy, angle);
-                blueCircle.revolveAround(orbitCx, orbitCy, angle);
-                }, angleInterval);
-        }
+  	console.log('canvas touch start', ev.touches[0].clientX - rect.left ); 
+  	var x = ev.touches[0].clientX - rect.left;
+	  if(!keyPressInterval){
+	  	if(x<200) {
+	  		keyPressInterval = setInterval(function() {
+	        // console.log('first',angle);
+	        if(angle < 5)
+	        angle += angleIncr;
+	        redCircle.revolveAround(orbitCx, orbitCy, angle);
+	        blueCircle.revolveAround(orbitCx, orbitCy, angle);
+	        }, angleInterval);
+  	  	}
+  	  	else {
+  	  		keyPressInterval = setInterval(function() {
+  	          // console.log('first',angle);
+  	        if(angle > -5)
+  	        angle -= angleIncr;
+  	        redCircle.revolveAround(orbitCx, orbitCy, angle);
+  	        blueCircle.revolveAround(orbitCx, orbitCy, angle);
+  	        }, angleInterval);
+	  	  	}
+	  		}
   }
 
   var onTouchEnd = function(ev) {
   	ev.preventDefault();
-  	console.log('canvas touch End');
+  	if(angle>0) angle -= angleIncr*3;
+    else angle += angleIncr*3;
+    // console.log('keyup',angle);
+    clearInterval(keyPressInterval);
+    keyPressInterval = undefined;
   }
 }
