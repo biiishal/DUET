@@ -219,6 +219,7 @@ var Duet = function() {
       case KEY.SPACE:   
       // console.log('space pressed');
       if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+      if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
       	reset();
@@ -233,40 +234,25 @@ var Duet = function() {
   	ev.preventDefault();
   	console.log('canvas touch start', ev.touches[0].clientX - rect.left ); 
   	var x = ev.touches[0].clientX - rect.left;
-	  if(!keyPressInterval){
 	  	if(x<200) {
-	  		keyPressInterval = setInterval(function() {
-	        // console.log('first',angle);
-	        if(angle < 5)
-	        angle += angleIncr;
-	        redCircle.revolveAround(orbitCx, orbitCy, angle);
-	        blueCircle.revolveAround(orbitCx, orbitCy, angle);
-	        }, angleInterval);
+	  		 ev.keyCode = 97;
+	  		 onKeyPress(ev);
   	  	}
   	  	else {
-  	  		keyPressInterval = setInterval(function() {
-  	          // console.log('first',angle);
-  	        if(angle > -5)
-  	        angle -= angleIncr;
-  	        redCircle.revolveAround(orbitCx, orbitCy, angle);
-  	        blueCircle.revolveAround(orbitCx, orbitCy, angle);
-  	        }, angleInterval);
-	  	  	}
+  	  		ev.keyCode = 100;
+  	  		onKeyPress(ev);
 	  		}
   }
 
   var onTouchEnd = function(ev) {
   	ev.preventDefault();
-  	if(angle>0) angle -= angleIncr*3;
-    else angle += angleIncr*3;
-    // console.log('keyup',angle);
-    clearInterval(keyPressInterval);
-    keyPressInterval = undefined;
+  	onKeyUp(ev);
   }
 
   var onContinue = function(ev) {
   	console.log('in onContinue');
   	 if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+  	 if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
       	reset();

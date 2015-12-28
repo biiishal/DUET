@@ -25,7 +25,7 @@ var level = [
 					// {"code": "RHR", "IY": -4800},
 					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : .6
+		"SPD" : 1
 	},
 
 	{"obs": [ {"code": "SC", "IY": -100},
