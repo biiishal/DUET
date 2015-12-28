@@ -30,6 +30,7 @@ var Duet = function() {
 	var playerData = {life: 2, score: 0, highScore: 0, level: 1};
 	var obsFactory = new ObstacleFactory();
 	var rect = canvas.getBoundingClientRect();
+	var btnContinue = document.getElementById('btn-continue');
 
 
 	var loadLevel = function() {	
@@ -58,6 +59,7 @@ var Duet = function() {
 		//Set Touch event listeners
 		canvas.addEventListener('touchstart', onTouchStart, false);
 		canvas.addEventListener('touchend', onTouchEnd, false);
+		btnContinue.addEventListener('click', onContinue);
 		
 
 		//Create the player
@@ -260,5 +262,16 @@ var Duet = function() {
     // console.log('keyup',angle);
     clearInterval(keyPressInterval);
     keyPressInterval = undefined;
+  }
+
+  var onContinue = function(ev) {
+  	console.log('in onContinue');
+  	 if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+      if(GAMESTATE == STATE.START)that.game();
+      if(GAMESTATE == STATE.OVER){
+      	reset();
+      	GAMESTATE = STATE.START;
+      	changeState();
+      }
   }
 }

@@ -29,3 +29,13 @@
 	font-size: 26px;
 	text-align: center;
 }
+
+#btn-continue {
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	background: red;
+	top:50%;
+	left: 30%;
+	z-index: 20;
+}
