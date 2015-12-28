@@ -54,6 +54,9 @@ var Duet = function() {
 		document.addEventListener('keyup', onKeyUp);
 		document.addEventListener('keydown', onKeyDown);
 
+		//Set Touch event listeners
+		canvas.addEventListener('touchstart', onTouchStart);
+		canvas.addEventListener('touchend', onTouchEnd);
 		
 
 		//Create the player
@@ -221,5 +224,15 @@ var Duet = function() {
       }
       break;
     }
+  }
+
+  var onTouchStart = function(ev) {
+  	ev.preventDefault();
+  	console.log('canvas touch start');
+  }
+
+  var onTouchEnd = function(ev) {
+  	ev.preventDefault();
+  	console.log('canvas touch End');
   }
 }
