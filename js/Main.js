@@ -95,13 +95,15 @@ var Duet = function() {
 	}
 
 	var changeState = function() {
-		clearInterval(gameLoop);
-	  gameLoop = setInterval(that.game, GAMEINT);
+		// clearInterval(gameLoop);
+		window.cancelAnimationFrame(gameLoop);
+		gameLoop = window.requestAnimationFrame(that.game);
 	}
 
 	this.game = function() {
 		switch(GAMESTATE) {
 			case STATE.PLAY:
+			gameLoop = window.requestAnimationFrame(that.game);
 			scoreCounter++;
 			if(scoreCounter%250 == 0){playerData.score++;
 				if(obstacles[obstacles.length-1].crossedFinish()) GAMESTATE = STATE.LVLCLR;
@@ -142,7 +144,7 @@ var Duet = function() {
 
 	    case STATE.OVER:
 	    console.log('GAMESTATE', GAMESTATE);
-	    clearInterval(gameLoop);
+	    if(gameLoop)window.cancelAnimationFrame(gameLoop);
 	    if(playerData.score > playerData.highScore) {
 	    	playerData.highScore = playerData.score;
 	    	screenMsg.innerHTML = MSG.OVER + ' <p>' +MSG.NEWHS+ playerData.highScore + '</p>'; 
@@ -209,7 +211,7 @@ var Duet = function() {
       case KEY.ESC:
       if(GAMESTATE == STATE.PLAY){
 	      if(!PAUSE){
-	        clearInterval(gameLoop);
+	        if(gameLoop)window.cancelAnimationFrame(gameLoop);
 	        document.removeEventListener('keypress', onKeyPress);
 	        document.removeEventListener('keyup', onKeyUp);
 	        screenMsg.innerHTML = MSG.PAUSE;
@@ -221,7 +223,7 @@ var Duet = function() {
 	      else {
 	      	if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
   	 			if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
-	        gameLoop = setInterval(that.game, GAMEINT);
+	        gameLoop = window.requestAnimationFrame(that.game);
 	        document.addEventListener('keypress', onKeyPress);
 	        document.addEventListener('keyup', onKeyUp);
 	        PAUSE = !PAUSE;
@@ -274,7 +276,7 @@ var Duet = function() {
       }
 
       if(PAUSE){
-	        gameLoop = setInterval(that.game, GAMEINT);
+	        gameLoop = window.requestAnimationFrame(that.game);
 	        document.addEventListener('keypress', onKeyPress);
 	        document.addEventListener('keyup', onKeyUp);
 	        PAUSE = !PAUSE;
