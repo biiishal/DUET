@@ -3,7 +3,6 @@ var Duet = function() {
 	var KEY = { LEFT:97, RIGHT:100, ESC:27, SPACE:32 };
 	var GAMESTATE = STATE.START;
 	var PAUSE = false;
-	var GAMEINT = 1;
 	var that = this;
 	var gameLoop;
 	var canvas = document.getElementById('canvas');
@@ -11,11 +10,16 @@ var Duet = function() {
 	var screenOverlay;
 	var btnContinue;
 	var screenMsg;
-	var MSG = {	START: "HIT SPACE TO START", 
+	var MSG = {	LOADING: "LOADING",
+							START: "HIT SPACE TO START", 
 							PAUSE: "GAME PAUSED", 
 							OVER: "GAME OVER!", 
 							LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE",
-							NEWHS: "NEW HIGHSCORE: "};
+							NEWHS: "NEW HIGHSCORE: ",
+							BTNCONTINUE: "CONTINUE",
+							BTNRESTART: "RESTART",
+							BTNRESUME: "RESUME",
+							BTNSTART: "START"};
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -28,10 +32,11 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 2, score: 0, highScore: 0, level: 1};
+	var playerData = {life: 2, score: 0, highScore: 0, level: 0};
 	var obsFactory = new ObstacleFactory();
 	var rect = canvas.getBoundingClientRect();
-
+	var backgroundAudio;
+	var checkAudioInterval;
 
 
 	var loadLevel = function() {	
@@ -40,6 +45,7 @@ var Duet = function() {
 		for(var i = 0; i<currentLevel.obs.length; i++) {
 		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
 		}
+		playerData.level += 1;
 	}
 
 	var reset = function() {
@@ -48,7 +54,7 @@ var Duet = function() {
 		currentLevel = level[levelCounter];
 		playerData.life = 2;
 		playerData.score = 0;
-		playerData.level = 1;
+		playerData.level = 0;
 	}
 	
 
@@ -81,17 +87,33 @@ var Duet = function() {
 
 		screenMsg = document.createElement('p');
 		screenOverlay.appendChild(screenMsg);
-		canvasContainer.appendChild(btnContinue);
-		btnContinue.innerHTML = 'START';
+		btnContinue.innerHTML = MSG.BTNSTART;
 		btnContinue.addEventListener('click', onContinue);
 
-		screenMsg.innerHTML = MSG.START;
+		screenMsg.innerHTML = MSG.LOADING;
 		canvasContainer.appendChild(screenOverlay);
-
-		// obstacles[0] = obsFactory.getObstacle('RHRR', 1.2, -100);
 
 		collisionDetector = new CollisionDetector();
 
+		//loading background audio
+		backgroundAudio = new Audio("sounds/level1.mp3");
+		backgroundAudio.loop = true;
+		backgroundAudio.volume = .25;
+		backgroundAudio.load();
+
+		checkAudioInterval = setInterval(function(){
+			if(checkAudioLoad()){
+				clearInterval(checkAudioInterval);
+				screenMsg.innerHTML = MSG.START;
+				canvasContainer.appendChild(btnContinue);
+			}
+		}, 1000);
+	}
+
+	var checkAudioLoad = function()	{
+		if (backgroundAudio.readyState === 4) {
+			return true;
+		}
 	}
 
 	var changeState = function() {
@@ -105,7 +127,7 @@ var Duet = function() {
 			case STATE.PLAY:
 			gameLoop = window.requestAnimationFrame(that.game);
 			scoreCounter++;
-			if(scoreCounter%250 == 0){playerData.score++;
+			if(scoreCounter%100 == 0){playerData.score++;
 				if(obstacles[obstacles.length-1].crossedFinish()) GAMESTATE = STATE.LVLCLR;
 			}
 				for(var i = 0; i < obstacles.length; i++) {
@@ -127,8 +149,8 @@ var Duet = function() {
 	  	console.log('GAMESTATE', GAMESTATE);
   		changeState();
   		for(var i = 0; i < obstacles.length; i++) {
-  			redCircle.revolveAround(orbitCx, orbitCy, .5);
-  			blueCircle.revolveAround(orbitCx, orbitCy, .5);
+  			redCircle.revolveAround(orbitCx, orbitCy, 2);
+  			blueCircle.revolveAround(orbitCx, orbitCy, 2);
   			if(playerData.life == 0) GAMESTATE = STATE.OVER;
 		   if(obstacles[i].reversePos()) GAMESTATE = STATE.PLAY;  
 	  	}
@@ -137,14 +159,21 @@ var Duet = function() {
 	    case STATE.START:
 	    console.log('GAMESTATE', GAMESTATE);
 	    if(level[levelCounter])loadLevel();
-	    else MSG.LVLCLR = 'NO MORE LEVELS';
+	    else {
+	    	MSG.LVLCLR = 'NO MORE LEVELS';
+	    	changeState();
+	    	GAMESTATE = STATE.PLAY;
+	  		break;}
     	changeState();
+    	backgroundAudio.play();
     	GAMESTATE = STATE.PLAY;
     	break;
 
 	    case STATE.OVER:
 	    console.log('GAMESTATE', GAMESTATE);
 	    if(gameLoop)window.cancelAnimationFrame(gameLoop);
+	    btnContinue.innerHTML = MSG.BTNRESTART;
+	    canvasContainer.appendChild(btnContinue);
 	    if(playerData.score > playerData.highScore) {
 	    	playerData.highScore = playerData.score;
 	    	screenMsg.innerHTML = MSG.OVER + ' <p>' +MSG.NEWHS+ playerData.highScore + '</p>'; 
@@ -157,12 +186,11 @@ var Duet = function() {
     	case STATE.LVLCLR:
     	console.log('GAMESTATE', GAMESTATE);
     	currentLevel = level[++levelCounter];
-    	playerData.level += 1;
     	screenMsg.innerHTML = MSG.LVLCLR;
 			canvasContainer.appendChild(screenOverlay);
-			btnContinue.innerHTML = 'START';
+			btnContinue.innerHTML = MSG.BTNSTART;
 			canvasContainer.appendChild(btnContinue);
-    	clearInterval(gameLoop);
+    	window.cancelAnimationFrame(gameLoop);
     	GAMESTATE = STATE.START;
     	// document.body.removeChild(screenOverlay);
     	break;
@@ -212,6 +240,7 @@ var Duet = function() {
       if(GAMESTATE == STATE.PLAY){
 	      if(!PAUSE){
 	        if(gameLoop)window.cancelAnimationFrame(gameLoop);
+	        backgroundAudio.pause();
 	        document.removeEventListener('keypress', onKeyPress);
 	        document.removeEventListener('keyup', onKeyUp);
 	        screenMsg.innerHTML = MSG.PAUSE;
@@ -221,6 +250,7 @@ var Duet = function() {
 	        PAUSE = !PAUSE;
 	      }
 	      else {
+	      	backgroundAudio.play();
 	      	if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
   	 			if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
 	        gameLoop = window.requestAnimationFrame(that.game);
@@ -276,6 +306,7 @@ var Duet = function() {
       }
 
       if(PAUSE){
+      		backgroundAudio.play();
 	        gameLoop = window.requestAnimationFrame(that.game);
 	        document.addEventListener('keypress', onKeyPress);
 	        document.addEventListener('keyup', onKeyUp);

@@ -33,7 +33,7 @@ Obstacle.prototype.updatePos = function() {
 	if(this.dx != 0)
 	{if(this.x+this.w >= 400 || this.x <= 0) this.dx = this.dx * -1;}
 
-	if(this.counter == 312) {
+	if(this.counter == 90) {
 		if(!this.beating) {
 			this.x -= 1;
 			this.y -= 1;
@@ -58,7 +58,7 @@ Obstacle.prototype.reversePos = function() {
 	if(this.y < 700 && this. y > -200) this.onScreen = true;
 	else this.onScreen = false;
 	if(this.initialY <=this.y) {
-		this.y -=15;
+		this.y -=45;
 		// this.x -=10;
 		return;
 	}
