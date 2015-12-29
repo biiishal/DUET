@@ -10,16 +10,17 @@ var Duet = function() {
 	var screenOverlay;
 	var btnContinue;
 	var screenMsg;
-	var MSG = {	LOADING: "LOADING",
-							START: "HIT SPACE TO START", 
-							PAUSE: "GAME PAUSED", 
-							OVER: "GAME OVER!", 
-							LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE",
-							NEWHS: "NEW HIGHSCORE: ",
-							BTNCONTINUE: "CONTINUE",
-							BTNRESTART: "RESTART",
-							BTNRESUME: "RESUME",
-							BTNSTART: "START"};
+	var MSG = {	
+		LOADING: "LOADING...",
+		START: "HIT SPACE TO START", 
+		PAUSE: "GAME PAUSED", 
+		OVER: "GAME OVER!", 
+		LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE",
+		NEWHS: "NEW HIGHSCORE: ",
+		BTNCONTINUE: "CONTINUE",
+		BTNRESTART: "RESTART",
+		BTNRESUME: "RESUME",
+		BTNSTART: "START"};
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -70,8 +71,8 @@ var Duet = function() {
 
 		//Create the player
 		orbit = new Orbit(orbitCx, orbitCy, 100, null, 'gray');
-		redCircle = new RedCircle(orbitCx-100, orbitCy, 10, 'red');
-		blueCircle = new BlueCircle(orbitCx+100, orbitCy, 10, 'blue');
+		redCircle = new RedCircle(orbitCx-100, orbitCy, 10, '#CA0013');
+		blueCircle = new BlueCircle(orbitCx+100, orbitCy, 10, '#043C89');
 
 		//initial call to canvas draw function
 		var drawer = new Drawer(canvas, orbit, redCircle, blueCircle, obstacles, playerData);
@@ -99,7 +100,7 @@ var Duet = function() {
 		// backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/level1.MP3");
 		backgroundAudio = new Audio('sounds/level1.MP3');
 		backgroundAudio.loop = true;
-		backgroundAudio.volume = .25;
+		backgroundAudio.volume = .50;
 		backgroundAudio.load();
 
 		checkAudioInterval = setInterval(function(){
@@ -137,12 +138,12 @@ var Duet = function() {
 			    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
 			    	playerData.life--;
 			    	GAMESTATE = STATE.HIT;
-			    	obstacles[i].changeColor('red');
+			    	obstacles[i].changeColor('#801515');
 			    } 
 			    if(collisionDetector.detectCollision(blueCircle, obstacles[i])) {
 			    	playerData.life--;
 			    	GAMESTATE = STATE.HIT;
-			    	obstacles[i].changeColor('blue');
+			    	obstacles[i].changeColor('#261758');
 			    } 
 		  	}
 		  	break;

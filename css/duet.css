@@ -1,5 +1,6 @@
 #canvas-container {
 	position: relative;
+	font-family: Oswald;
 	display: block;
 	width: 400px;
 	height: 600px;
@@ -32,8 +33,9 @@
 
 #btn-continue {
 	position: absolute;
-	background: red;
+	background-color: red;
+	border-radius: 5px;
 	padding:5px;
 	top:40%;
-	left: 38%;
+	left: 43%;
 }
