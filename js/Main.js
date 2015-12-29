@@ -96,7 +96,7 @@ var Duet = function() {
 		collisionDetector = new CollisionDetector();
 
 		//loading background audio
-		backgroundAudio = new Audio("sounds/level1.mp3");
+		backgroundAudio = new Audio("https://github.com/biiishal/DUET/blob/gh-pages/sounds/level1.MP3");
 		backgroundAudio.loop = true;
 		backgroundAudio.volume = .25;
 		backgroundAudio.load();
