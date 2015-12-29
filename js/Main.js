@@ -104,6 +104,7 @@ var Duet = function() {
 		checkAudioInterval = setInterval(function(){
 			if(checkAudioLoad()){
 				clearInterval(checkAudioInterval);
+				console.log('checking audio load');
 				screenMsg.innerHTML = MSG.START;
 				canvasContainer.appendChild(btnContinue);
 			}
