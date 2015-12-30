@@ -56,12 +56,15 @@ var Duet = function() {
 		playerData.level += 1;
 		levelTitle.innerHTML = currentLevel.TITLE;
 		levelMsg.innerHTML = currentLevel.MSG;
+		var levelMsgTimeout = currentLevel.TIMEOUT;
 		canvasContainer.appendChild(levelTitle);
 		canvasContainer.appendChild(levelMsg);
 		setTimeout(function(){
 			canvasContainer.removeChild(levelTitle);
-			canvasContainer.removeChild(levelMsg);
 		}, 3000);
+		setTimeout(function(){
+			canvasContainer.removeChild(levelMsg);
+		}, levelMsgTimeout);
 	}
 
 	var reset = function() {
@@ -140,6 +143,7 @@ var Duet = function() {
 		backgroundAudio.load();
 
 		checkAudioInterval = setInterval(function(){
+			console.log('checking audio');
 			if(checkAudioLoad()){
 				clearInterval(checkAudioInterval);
 				screenMsg.innerHTML = MSG.START;
@@ -226,6 +230,16 @@ var Duet = function() {
     	case STATE.LVLCLR:
     	console.log('GAMESTATE', GAMESTATE);
     	currentLevel = level[++levelCounter];
+    	if(currentLevel.AUDIO) {
+    		backgroundAudio.src = currentLevel.AUDIO;
+    		checkAudioInterval = setInterval(function(){
+					console.log('checking audio');
+					if(checkAudioLoad()){
+						clearInterval(checkAudioInterval);
+						GAMESTATE = STATE.START;
+					}
+				}, 1000);
+    	} 
     	screenMsg.innerHTML = MSG.LVLCLR;
 			canvasContainer.appendChild(screenOverlay);
 			btnContinue.innerHTML = MSG.BTNCONTINUE;

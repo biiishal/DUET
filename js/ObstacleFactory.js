@@ -1,49 +1,45 @@
 var ObstacleFactory = function(){
 	this.getObstacle = function(code, dy, initialY) {
 		switch(code){
-			case 'SC':
+			case 'SC': //Square Center
 			return(new SquareC(dy, initialY));
 			break;
 
-			case 'SCR':
+			case 'SCR': //Square Center Moving Right
 			return(new SquareCRight(dy, initialY));
 			break;
 
-			case 'SCL':
+			case 'SCL': //Square Center Moving Left
 			return(new SquareCLeft(dy, initialY));
 			break;
 
-			case 'RUL':
+			case 'RUL': //Rectangle Upright Left
 			return(new RectangleUprightL(dy, initialY));
 			break;
 
-			case 'RUR':
+			case 'RUR': //Rectangle Upright Right
 			return(new RectangleUprightR(dy, initialY));
 			break;
 
-			case 'RHC':
+			case 'RHC': //Rectangle Horizontal Center
 			return(new RectangleHorzC(dy, initialY));
 			break;
-
-			case 'RHCR':
+ 
+			case 'RHCR': //Rectangle Horizontal Center Moving Right
 			return(new RectangleHorzCRight(dy, initialY));
 			break;
 
-			case 'RHCL':
+			case 'RHCL': //Rectangle Horizontal Center Moving Left
 			return(new RectangleHorzCLeft(dy, initialY));
 			break;
 
-			case 'RHL':
+			case 'RHL': //Rectangle Horizontal Left
 			return(new RectangleHorzL(dy, initialY));
 			break;
 
-			case 'RHR':
+			case 'RHR': //Rectangle Horizontal Right
 			return(new RectangleHorzR(dy, initialY));
 			break;
-
-			// case 'RHRR':
-			// return(new RectangleHorzRRotate(dy, initialY));
-			// break;
 		}
 	}	
 }
