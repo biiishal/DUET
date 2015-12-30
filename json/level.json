@@ -63,7 +63,7 @@ var level = [
 		"TITLE"	: "LEVEL 2",
 		"MSG" : "HAVE A CIRCULAR STATE OF MIND",
 		"TIMEOUT" : 4000,
-		"AUDIO" : "sounds/song1.MP3"
+		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song1.MP3"
 	},
 
 
