@@ -72,6 +72,10 @@
 	color: white;
 }
 
+#screen-overlay #game-over {
+	font-size: 50px;
+}
+
 #btn-continue {
 	position: absolute;
 	background-color: red;

@@ -1,7 +1,7 @@
 var Duet = function() {
 	var STATE = { START: 0, PLAY: 1, HIT: 2, OVER:3, LVLCLR:4 };
 	var KEY = { LEFT:97, RIGHT:100, ESC:27, SPACE:32 };
-	var GAMESTATE = STATE.START;
+	var GAMESTATE;
 	var PAUSE = false;
 	var that = this;
 	var gameLoop;
@@ -144,6 +144,7 @@ var Duet = function() {
 				clearInterval(checkAudioInterval);
 				screenMsg.innerHTML = MSG.START;
 				canvasContainer.appendChild(btnContinue);
+				GAMESTATE = STATE.START;
 			}
 		}, 1000);
 	}
@@ -215,7 +216,7 @@ var Duet = function() {
 	    canvasContainer.appendChild(btnContinue);
 	    if(playerData.score > playerData.highScore) {
 	    	playerData.highScore = playerData.score;
-	    	screenMsg.innerHTML = MSG.OVER + ' <p>' +MSG.NEWHS+ playerData.highScore + '</p>'; 
+	    	screenMsg.innerHTML = '<p id = "game-over">' + MSG.OVER + '</p>'+ ' <p>' +MSG.NEWHS+ playerData.highScore + '</p>'; 
 	    }
 	    else screenMsg.innerHTML = MSG.OVER;
 			canvasContainer.appendChild(screenOverlay);
@@ -308,7 +309,7 @@ var Duet = function() {
 
       case KEY.SPACE:   
       // console.log('space pressed');
-      if(!PAUSE){
+      if(!PAUSE && GAMESTATE == STATE.START){
 	      if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
 	      if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
 	      if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
