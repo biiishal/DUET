@@ -28,7 +28,7 @@ var level = [
 		"SPD" : 3,
 		"TITLE"	: "THE START",
 		"MSG" : "CONTROL THE CIRCLES WITH 'W' AND 'D'",
-		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song1.MP3"
+		"AUDIO" : ""
 	},
 
 	{"OBS": [ {"code": "SC", "IY": -100},
