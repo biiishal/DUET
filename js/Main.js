@@ -7,12 +7,14 @@ var Duet = function() {
 	var gameLoop;
 	var canvas = document.getElementById('canvas');
 	var canvasContainer = document.getElementById('canvas-container');
-	var screenOverlay;
-	var gameTitle;
-	var gameSubtitle;
-	var btnContinue;
-	var btnPause;
-	var screenMsg;
+	var screenOverlay,
+		gameTitle,
+		gameSubtitle,
+		btnContinue,
+		btnPause,
+		screenMsg,
+		levelTitle,
+		levelMsg;
 	var MSG = {	
 		LOADING: "LOADING...",
 		START: "HIT SPACE TO START", 
@@ -48,10 +50,18 @@ var Duet = function() {
 	var loadLevel = function() {	
 			//loading obstacles
 	
-		for(var i = 0; i<currentLevel.obs.length; i++) {
-		obstacles[i] = obsFactory.getObstacle(currentLevel.obs[i].code, currentLevel.SPD, currentLevel.obs[i].IY);
+		for(var i = 0; i<currentLevel.OBS.length; i++) {
+		obstacles[i] = obsFactory.getObstacle(currentLevel.OBS[i].code, currentLevel.SPD, currentLevel.OBS[i].IY);
 		}
 		playerData.level += 1;
+		levelTitle.innerHTML = currentLevel.TITLE;
+		levelMsg.innerHTML = currentLevel.MSG;
+		canvasContainer.appendChild(levelTitle);
+		canvasContainer.appendChild(levelMsg);
+		setTimeout(function(){
+			canvasContainer.removeChild(levelTitle);
+			canvasContainer.removeChild(levelMsg);
+		}, 3000);
 	}
 
 	var reset = function() {
@@ -102,6 +112,12 @@ var Duet = function() {
 		gameSubtitle = document.createElement('p');
 		gameSubtitle.id = 'game-subtitle';
 		gameSubtitle.innerHTML = MSG.GAMESUBTITLE;
+
+		levelTitle = document.createElement('p');
+		levelTitle.id = 'level-title';
+
+		levelMsg = document.createElement('p');
+		levelMsg.id = 'level-msg';
 
 		screenMsg = document.createElement('p');
 		screenOverlay.appendChild(screenMsg);

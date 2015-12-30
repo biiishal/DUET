@@ -1,6 +1,6 @@
 var level = [
 
-	{"obs": [ {"code": "SC", "IY": -100},
+	{"OBS": [ {"code": "SC", "IY": -100},
 					{"code": "RUL", "IY": -400},
 					{"code": "RUR", "IY": -600},
 					{"code": "RHL", "IY": -800}
@@ -25,10 +25,12 @@ var level = [
 					// {"code": "RHR", "IY": -4800},
 					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 3
+		"SPD" : 3,
+		"TITLE"	: "THE START",
+		"MSG" : "CONTROL THE CIRCLES WITH 'W' AND 'D'"
 	},
 
-	{"obs": [ {"code": "SC", "IY": -100},
+	{"OBS": [ {"code": "SC", "IY": -100},
 					{"code": "RUL", "IY": -400},
 					{"code": "RUR", "IY": -600},
 					{"code": "RHL", "IY": -800},
@@ -57,7 +59,7 @@ var level = [
 	},
 
 
-	{"obs": [ {"code": "SC", "IY": -100},
+	{"OBS": [ {"code": "SC", "IY": -100},
 					{"code": "RUL", "IY": -400},
 					{"code": "RUR", "IY": -600},
 					{"code": "RHL", "IY": -800},

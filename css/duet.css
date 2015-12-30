@@ -31,6 +31,23 @@
 	word-spacing: 9px;
 }
 
+#canvas-container #level-title {
+	position: absolute;
+	left: 38%;
+	top: 45%;
+	color: white;
+	font-size: 16px;
+}
+
+#canvas-container #level-msg {
+	position: absolute;
+	left: 38%;
+	top: 50%;
+	color: white;
+	font-size: 16px;
+}
+
+
 #screen-overlay {
 	position: absolute;
 	display: block;
