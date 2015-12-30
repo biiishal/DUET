@@ -7,11 +7,6 @@
 	margin: 0 auto;
 }
 
-#canvas {
-	display: block;
-	margin: 0 auto;
-}
-
 #canvas-container #btn-pause {
 	position: absolute;
 	right: 16px;
@@ -47,7 +42,6 @@
 	font-size: 16px;
 }
 
-
 #screen-overlay {
 	position: absolute;
 	display: block;
@@ -74,6 +68,11 @@
 
 #screen-overlay #game-over {
 	font-size: 50px;
+	line-height: 10px;
+}
+
+#screen-overlay #high-score {
+	font-size: 20px;
 }
 
 #btn-continue {

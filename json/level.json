@@ -6,26 +6,6 @@ var level = [
 					{"code": "RUL", "IY": -1500},
 					{"code": "RUR", "IY": -1900},
 					{"code": "RHL", "IY": -2300}
-					// {"code": "RHL", "IY": -1000},
-					// {"code": "RHL", "IY": -1200},
-					// {"code": "RHR", "IY": -1400},
-					// {"code": "RHL", "IY": -1600},
-					// {"code": "RHR", "IY": -1800},
-					// {"code": "RHL", "IY": -2000},
-					// {"code": "RHR", "IY": -2200},
-					// {"code": "RHC", "IY": -2400},
-					// {"code": "SC", "IY": -2600},
-					// {"code": "RUL", "IY": -3000},
-					// {"code": "RUR", "IY": -3200},
-					// {"code": "RHR", "IY": -3400},
-					// {"code": "RHR", "IY": -3600},
-					// {"code": "RHR", "IY": -3800},
-					// {"code": "RHR", "IY": -4000},
-					// {"code": "RHL", "IY": -4200},
-					// {"code": "RHR", "IY": -4400},
-					// {"code": "RHL", "IY": -4600},
-					// {"code": "RHR", "IY": -4800},
-					// {"code": "RHC", "IY": -5000}
 					], 
 		"SPD" : 3,
 		"TITLE"	: "THE START",
@@ -45,20 +25,8 @@ var level = [
 					{"code": "RHL", "IY": -3300},
 					{"code": "RHR", "IY": -3600},
 					{"code": "RHC", "IY": -3900}
-					// {"code": "SC", "IY": -2600},
-					// {"code": "RUL", "IY": -3000},
-					// {"code": "RUR", "IY": -3200},
-					// {"code": "RHR", "IY": -3400},
-					// {"code": "RHR", "IY": -3600},
-					// {"code": "RHR", "IY": -3800},
-					// {"code": "RHR", "IY": -4000},
-					// {"code": "RHL", "IY": -4200},
-					// {"code": "RHR", "IY": -4400},
-					// {"code": "RHL", "IY": -4600},
-					// {"code": "RHR", "IY": -4800},
-					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 3.2,
+		"SPD" : 3.1,
 		"TITLE"	: "LEVEL 2",
 		"MSG" : "TO ADOPT A CIRCULAR STATE OF MIND",
 		"TIMEOUT" : 4000,
@@ -91,7 +59,7 @@ var level = [
 					{"code": "RHR", "IY": -4800},
 					{"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 3.3,
+		"SPD" : 3.1,
 		"TITLE"	: "LEVEL 3",
 		"MSG" : "FOCUS",
 		"TIMEOUT" : 5000
@@ -123,7 +91,7 @@ var level = [
 					{"code": "RHR", "IY": -4800},
 					{"code": "RHC", "IY": -5000}
 		], 
-		"SPD" : 3.3,
+		"SPD" : 3.2,
 		"TITLE"	: "LEVEL 4"
 	},
 
@@ -165,11 +133,36 @@ var level = [
 						{"code": "RHLR", "IY": -7900},
 						{"code": "RHLR", "IY": -8100}
 		],
-		"SPD" : 3.4,
+		"SPD" : 3.3,
 		"TITLE"	: "LEVEL 5",
 		"MSG" : "THINGS ARE CHANGING",
 		"TIMEOUT" : 5000
 	},
+
+	{
+		"OBS": [ 
+		{"code": "RUL" , "IY": -300},
+						{"code": "RUR", "IY": -300},
+						{"code": "RHCR", "IY": -600},
+						{"code": "RHCL", "IY": -900},
+						{"code": "RHCL", "IY": -1100},
+						{"code": "RHR", "IY": -1300},
+						{"code": "RHL", "IY": -1600},
+						{"code": "RHR", "IY": -1900},
+						{"code": "RHL", "IY": -2200},
+						{"code": "SC", "IY": -2600},
+						{"code": "SCR", "IY": -2950},
+						{"code": "SCL", "IY": -2950},
+						{"code": "SC", "IY": -3300},
+						{"code": "SCL", "IY": -3300}
+		],
+		"SPD" : 3.4,
+		"TITLE"	: "LEVEL 6",
+		"TIMEOUT" : 5000,
+		"MSG" : "THE LAW OF ENTROPY",
+		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song1.mp3"
+	}
+,
 
 	{
 		"OBS": [ 
@@ -211,10 +204,60 @@ var level = [
 						{"code": "RHLR", "IY": -8100}
 		],
 		"SPD" : 3.4,
-		"TITLE"	: "LEVEL 5",
+		"TITLE"	: "LEVEL 7",
 		"TIMEOUT" : 5000,
-		"MSG" : "DON'T GET ANY BIG IDEAS",
-		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song1.mp3"
+		"MSG" : "FLOAT",
+		"AUDIO" : ""
+	}
+,
+
+	{
+		"OBS": [ 
+						{"code": "RHRD" , "IY": -300},
+						{"code": "RHR", "IY": -300},
+						{"code": "RHC", "IY": -600},
+						{"code": "RHCL", "IY": -900},
+						{"code": "RHC", "IY": -900},
+						{"code": "RHC", "IY": -1100},
+						{"code": "RHCR", "IY": -1300},
+						{"code": "RHC", "IY": -1300},
+						{"code": "RHL", "IY": -1700},
+						{"code": "RHLD", "IY": -2100},
+						{"code": "RHL", "IY": -2200},
+						{"code": "RHLD", "IY": -2700},
+						{"code": "SC", "IY": -2600},
+						{"code": "SCR", "IY": -2950},
+						{"code": "SCL", "IY": -2950},
+						{"code": "SC", "IY": -3300},
+						{"code": "SCD", "IY": -4200},
+						{"code": "RHL", "IY": -3500},
+						{"code": "RHR", "IY": -3750},
+						{"code": "RHL", "IY": -4000},
+						{"code": "RHR", "IY": -4200},
+						{"code": "RHL", "IY": -4400},
+						{"code": "RHR", "IY": -4600},
+						{"code": "RHL", "IY": -4800},
+						{"code": "RHL", "IY": -5000},
+						{"code": "RHL", "IY": -5200},
+						{"code": "RHL", "IY": -5400},
+						{"code": "RHL", "IY": -5600},
+						{"code": "RHL", "IY": -5800},
+						{"code": "RHR", "IY": -6000},
+						{"code": "RHR", "IY": -6200},
+						{"code": "RHR", "IY": -6400},
+						{"code": "RHR", "IY": -6600},
+						{"code": "RHR", "IY": -6800},
+						{"code": "RHRL", "IY": -7000},
+						{"code": "RHRD", "IY": -8500},
+						{"code": "RHRL", "IY": -7500},
+						{"code": "RHLR", "IY": -7900},
+						{"code": "RHLR", "IY": -8100}
+		],
+		"SPD" : 3.4,
+		"TITLE"	: "LEVEL 8",
+		"TIMEOUT" : 5000,
+		"MSG" : "FLOAT",
+		"AUDIO" : ""
 	}
 
 

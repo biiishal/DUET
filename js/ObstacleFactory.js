@@ -5,6 +5,10 @@ var ObstacleFactory = function(){
 			return(new SquareC(dy, initialY));
 			break;
 
+			case 'SCD': //Square Center Moving Down
+			return(new SquareCDown(dy, initialY));
+			break;
+
 			case 'SCR': //Square Center Moving Right
 			return(new SquareCRight(dy, initialY));
 			break;
@@ -24,6 +28,10 @@ var ObstacleFactory = function(){
 			case 'RHC': //Rectangle Horizontal Center
 			return(new RectangleHorzC(dy, initialY));
 			break;
+
+			case 'RHCD': //Rectangle Horizontal Center Moving Down
+			return(new RectangleHorzCDown(dy, initialY));
+			break;
  
 			case 'RHCR': //Rectangle Horizontal Center Moving Right
 			return(new RectangleHorzCRight(dy, initialY));
@@ -42,11 +50,19 @@ var ObstacleFactory = function(){
 			break;
 
 			case 'RHLR': //Rectangle Horizontal Left Moving Right
-			return(new RectangleHorzLR(dy, initialY));
+			return(new RectangleHorzLRight(dy, initialY));
 			break;
 
 			case 'RHRL': //Rectangle Horizontal Right Moving Left
-			return(new RectangleHorzRL(dy, initialY));
+			return(new RectangleHorzRLeft(dy, initialY));
+			break;
+
+			case 'RHRD': //Rectangle Horizontal Right Moving Down
+			return(new RectangleHorzRDown(dy, initialY));
+			break;
+
+			case 'RHLD': //Rectangle Horizontal Left Moving Down
+			return(new RectangleHorzLDown(dy, initialY));
 			break;
 		}
 	}	

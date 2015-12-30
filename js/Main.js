@@ -5,8 +5,8 @@ var Duet = function() {
 	var PAUSE = false;
 	var that = this;
 	var gameLoop;
-	var canvas = document.getElementById('canvas');
-	var canvasContainer = document.getElementById('canvas-container');
+	var canvas;
+	var canvasContainer;
 	var screenOverlay,
 		gameTitle,
 		gameSubtitle,
@@ -31,8 +31,8 @@ var Duet = function() {
 		BTNSTART: "START",
 		GAMETITLE: "DUET",
 		GAMESUBTITLE: "HEADPHONES RECOMMENDED"};
-	var orbitCx = canvas.width/2;
-	var orbitCy = canvas.height/1.3;
+	var orbitCx;
+	var orbitCy;
 	var angleInterval = 15;
   var angle = 0;
   var angleIncr = 0.9;
@@ -43,16 +43,15 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 2, score: 0, highScore: 0, level: 0};
+	var playerData = {life: 3, score: 0, highScore: 0, level: 0};
 	var obsFactory = new ObstacleFactory();
-	var rect = canvas.getBoundingClientRect();
 	var backgroundAudio;
 	var checkAudioInterval;
 
 
 	var loadLevel = function() {	
 			//loading obstacles
-	
+		obstacles.splice(0,obstacles.length);
 		for(var i = 0; i<currentLevel.OBS.length; i++) {
 		obstacles[i] = obsFactory.getObstacle(currentLevel.OBS[i].code, currentLevel.SPD, currentLevel.OBS[i].IY);
 		}
@@ -77,10 +76,31 @@ var Duet = function() {
 		playerData.life = 2;
 		playerData.score = 0;
 		playerData.level = 0;
+		backgroundAudio.src = "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.mp3";
+    		checkAudioInterval = setInterval(function(){
+					console.log('checking audio');
+					if(checkAudioLoad()){
+						clearInterval(checkAudioInterval);
+						btnContinue.innerHTML = MSG.BTNSTART;
+						canvasContainer.appendChild(btnContinue);
+						GAMESTATE = STATE.START;
+					}
+				}, 1000);
 	}
 	
 
 	this.load = function() {
+		canvas = document.createElement('canvas');
+		canvas.width = 400;
+		canvas.height = 600;
+		canvasContainer = document.createElement('div')
+		canvas.id = 'canvas';
+		canvasContainer.id = 'canvas-container';
+		canvasContainer.appendChild(canvas);
+
+		orbitCx = canvas.width/2;
+		orbitCy = canvas.height/1.3;
+
 		//Set Listeners
 		document.addEventListener('keypress', onKeyPress);
 		document.addEventListener('keyup', onKeyUp);
@@ -154,6 +174,8 @@ var Duet = function() {
 				GAMESTATE = STATE.START;
 			}
 		}, 1000);
+
+		document.body.appendChild(canvasContainer);
 	}
 
 	var checkAudioLoad = function()	{
@@ -163,7 +185,6 @@ var Duet = function() {
 	}
 
 	var changeState = function() {
-		// clearInterval(gameLoop);
 		window.cancelAnimationFrame(gameLoop);
 		gameLoop = window.requestAnimationFrame(that.game);
 	}
@@ -171,25 +192,30 @@ var Duet = function() {
 	this.game = function() {
 		switch(GAMESTATE) {
 			case STATE.PLAY:
+			// console.log('GAMESTATE', GAMESTATE);
 			gameLoop = window.requestAnimationFrame(that.game);
 			scoreCounter++;
-			if(scoreCounter%100 == 0){playerData.score++;
-				if(obstacles[obstacles.length-1].crossedFinish()) GAMESTATE = STATE.LVLCLR;
-			}
-				for(var i = 0; i < obstacles.length; i++) {
-			    obstacles[i].updatePos();
-			    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
-			    	playerData.life--;
-			    	GAMESTATE = STATE.HIT;
-			    	obstacles[i].changeColor('#801515');
-			    } 
-			    if(collisionDetector.detectCollision(blueCircle, obstacles[i])) {
-			    	playerData.life--;
-			    	GAMESTATE = STATE.HIT;
-			    	obstacles[i].changeColor('#261758');
-			    } 
-		  	}
-		  	break;
+			if(scoreCounter%100 == 0){
+				playerData.score++;
+				if(obstacles[obstacles.length-1].crossedFinish()) {
+					GAMESTATE = STATE.LVLCLR;
+				}
+				}
+
+			for(var i = 0; i < obstacles.length; i++) {
+		    obstacles[i].updatePos();
+		    if(collisionDetector.detectCollision(redCircle, obstacles[i])) {
+		    	playerData.life--;
+		    	GAMESTATE = STATE.HIT;
+		    	obstacles[i].changeColor('#801515');
+		    } 
+		    if(collisionDetector.detectCollision(blueCircle, obstacles[i])) {
+		    	playerData.life--;
+		    	GAMESTATE = STATE.HIT;
+		    	obstacles[i].changeColor('#261758');
+		    } 
+	  	}
+	  	break;
 
 	  	case STATE.HIT:
 	  	console.log('GAMESTATE', GAMESTATE);
@@ -218,9 +244,9 @@ var Duet = function() {
 	    canvasContainer.appendChild(btnContinue);
 	    if(playerData.score > playerData.highScore) {
 	    	playerData.highScore = playerData.score;
-	    	screenMsg.innerHTML = '<p id = "game-over">' + MSG.OVER + '</p>'+ ' <p>' +MSG.NEWHS+ playerData.highScore + '</p>'; 
+	    	screenMsg.innerHTML = '<p id = "game-over">' + MSG.OVER + '</p>'+ ' <p id = "high-score">' + MSG.NEWHS+ playerData.highScore + '</p>'; 
 	    }
-	    else screenMsg.innerHTML = MSG.OVER;
+	    else screenMsg.innerHTML = '<p id = "game-over">' + MSG.OVER + '</p>';
 			canvasContainer.appendChild(screenOverlay);
 			break;
 
@@ -239,14 +265,12 @@ var Duet = function() {
     	}
     	if(currentLevel.AUDIO) {
     		screenMsg.innerHTML = MSG.CHAPTERCLR + '<p>' + MSG.LOADING + '</p>';
-    		canvasContainer.appendChild(screenOverlay);
     		backgroundAudio.src = currentLevel.AUDIO;
     		checkAudioInterval = setInterval(function(){
 					console.log('checking audio');
 					if(checkAudioLoad()){
 						clearInterval(checkAudioInterval);
 						screenMsg.innerHTML = MSG.CONTINUE;
-						// canvasContainer.appendChild(screenOverlay);
 						btnContinue.innerHTML = MSG.BTNCONTINUE;
 						canvasContainer.appendChild(btnContinue);
 						GAMESTATE = STATE.START;
@@ -254,24 +278,22 @@ var Duet = function() {
 				}, 1000);
     	} 
     	else {
+    				canvasContainer.appendChild(screenOverlay);
     				btnContinue.innerHTML = MSG.BTNCONTINUE;
     				canvasContainer.appendChild(btnContinue);}
     	window.cancelAnimationFrame(gameLoop);
     	GAMESTATE = STATE.START;
-    	// document.body.removeChild(screenOverlay);
     	break;
 		}
 	}
 
 	//EVENT LISTENING
   var onKeyPress = function(ev) {
-    // console.log("onKeyPress", ev.keyCode);
 
     if (!keyPressInterval) {
         switch(ev.keyCode){
             case KEY.LEFT:
                 keyPressInterval = setInterval(function() {
-                // console.log('first',angle);
                 if(angle < 5)
                 angle += angleIncr;
                 redCircle.revolveAround(orbitCx, orbitCy, angle);
@@ -280,8 +302,7 @@ var Duet = function() {
             break;
 
             case KEY.RIGHT:
-                keyPressInterval = setInterval(function() {
-                  // console.log('first',angle);
+                keyPressInterval = setInterval(function() {  
                 if(angle > -5)
                 angle -= angleIncr;
                 redCircle.revolveAround(orbitCx, orbitCy, angle);
@@ -295,7 +316,6 @@ var Duet = function() {
   var onKeyUp = function(ev) {
     if(angle>0) angle -= angleIncr*3;
     else angle += angleIncr*3;
-    // console.log('keyup',angle);
     clearInterval(keyPressInterval);
     keyPressInterval = undefined;
   }
@@ -303,7 +323,7 @@ var Duet = function() {
   var onKeyDown = function(ev) {
     switch(ev.keyCode){
       case KEY.ESC:
-      if(GAMESTATE == STATE.PLAY){
+      if(GAMESTATE == STATE.PLAY || GAMESTATE == STATE.HIT){
 	      if(!PAUSE){
 	      	btnPause.style.backgroundImage = "url('images/icon-play.png')";
 	        if(gameLoop)window.cancelAnimationFrame(gameLoop);
@@ -334,7 +354,6 @@ var Duet = function() {
       break;
 
       case KEY.SPACE:   
-      // console.log('space pressed');
       if(!PAUSE && GAMESTATE == STATE.START){
 	      if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
 	      if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
@@ -373,7 +392,6 @@ var Duet = function() {
   }
 
   var onContinue = function(ev) {
-  	console.log('in onContinue');
 		if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
 		if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
 		if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
@@ -381,6 +399,7 @@ var Duet = function() {
 		 
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER || GAMESTATE == STATE.LVLCLR){
+      	if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
       	reset();
       	GAMESTATE = STATE.START;
       	changeState();
