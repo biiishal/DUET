@@ -43,7 +43,7 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 3, score: 0, highScore: 0, level: 0};
+	var playerData = {life: 1, score: 0, highScore: 0, level: 0};
 	var obsFactory = new ObstacleFactory();
 	var backgroundAudio;
 	var checkAudioInterval;
@@ -73,7 +73,7 @@ var Duet = function() {
 		obstacles.splice(0,obstacles.length);
 		levelCounter = 0;
 		currentLevel = level[levelCounter];
-		playerData.life = 2;
+		playerData.life = 1;
 		playerData.score = 0;
 		playerData.level = 0;
 		backgroundAudio.src = "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.mp3";
@@ -400,8 +400,9 @@ var Duet = function() {
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER || GAMESTATE == STATE.LVLCLR){
       	if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
+      	screenMsg.innerHTML = MSG.LOADING;
       	reset();
-      	GAMESTATE = STATE.START;
+      	// GAMESTATE = STATE.START;
       	changeState();
       }
 

@@ -4,7 +4,6 @@ var inheritsFrom = function (child, parent) {
 };
 
 //Parent Circle Class
-
 var Circle = function(x, y, r, fs, ss) {
 	this.x = x;
 	this.y = y;

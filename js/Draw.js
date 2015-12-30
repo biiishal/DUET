@@ -59,8 +59,6 @@ var Drawer = function(canvas, orbit, redCircle, blueCircle, obstacles, playerDat
 
 	  for(var i = 0; i < obstacles.length; i++) {
 	   if(obstacles[i].onScreen)drawRectFill(obstacles[i]);
-	   // if(obstacles[i].obsPassed)drawScore(++score);
-	   // drawRectFill(obstacles[i]);
 	  }
 
 	  drawScore(playerData.score);

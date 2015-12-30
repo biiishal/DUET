@@ -256,7 +256,7 @@ var level = [
 		"SPD" : 3.4,
 		"TITLE"	: "LEVEL 8",
 		"TIMEOUT" : 5000,
-		"MSG" : "FLOAT",
+		"MSG" : "TO FLOAT",
 		"AUDIO" : ""
 	}
 
