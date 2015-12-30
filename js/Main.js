@@ -5,8 +5,8 @@ var Duet = function() {
 	var PAUSE = false;
 	var that = this;
 	var gameLoop;
-	var canvas;
-	var canvasContainer;
+	var canvas = document.getElementById('canvas');
+	var canvasContainer = document.getElementById('canvas-container');
 	var screenOverlay,
 		gameTitle,
 		gameSubtitle,
@@ -31,8 +31,8 @@ var Duet = function() {
 		BTNSTART: "START",
 		GAMETITLE: "DUET",
 		GAMESUBTITLE: "HEADPHONES RECOMMENDED"};
-	var orbitCx;
-	var orbitCy;
+	var orbitCx = canvas.width/2;
+	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
   var angle = 0;
   var angleIncr = 0.9;
@@ -47,7 +47,7 @@ var Duet = function() {
 	var obsFactory = new ObstacleFactory();
 	var backgroundAudio;
 	var checkAudioInterval;
-	var rect;
+	var rect = canvas.getBoundingClientRect();
 
 
 	var loadLevel = function() {	
@@ -93,18 +93,6 @@ var Duet = function() {
 	
 
 	this.load = function() {
-		canvas = document.createElement('canvas');
-		canvas.width = 400;
-		canvas.height = 600;
-		canvasContainer = document.createElement('div')
-		canvas.id = 'canvas';
-		canvasContainer.id = 'canvas-container';
-		canvasContainer.appendChild(canvas);
-		rect = canvas.getBoundingClientRect();
-
-		orbitCx = canvas.width/2;
-		orbitCy = canvas.height/1.3;
-
 		//Set Listeners
 		document.addEventListener('keypress', onKeyPress);
 		document.addEventListener('keyup', onKeyUp);
