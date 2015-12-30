@@ -27,7 +27,8 @@ var level = [
 					], 
 		"SPD" : 3,
 		"TITLE"	: "THE START",
-		"MSG" : "CONTROL THE CIRCLES WITH 'W' AND 'D'"
+		"MSG" : "CONTROL THE CIRCLES WITH 'W' AND 'D'",
+		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song1.MP3"
 	},
 
 	{"OBS": [ {"code": "SC", "IY": -100},
@@ -55,7 +56,10 @@ var level = [
 					// {"code": "RHR", "IY": -4800},
 					// {"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 3.4
+		"SPD" : 3.4,
+		"TITLE"	: "LEVEL 2",
+		"MSG" : "",
+		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song2.MP3"
 	},
 
 
@@ -78,13 +82,47 @@ var level = [
 					{"code": "RHR", "IY": -3600},
 					{"code": "RHR", "IY": -3800},
 					{"code": "RHR", "IY": -4000},
-					{"code": "RHL", "IY": -4200}
-					// {"code": "RHR", "IY": -4400},
-					// {"code": "RHL", "IY": -4600},
-					// {"code": "RHR", "IY": -4800},
-					// {"code": "RHC", "IY": -5000}
+					{"code": "RHL", "IY": -4200},
+					{"code": "RHR", "IY": -4400},
+					{"code": "RHL", "IY": -4600},
+					{"code": "RHR", "IY": -4800},
+					{"code": "RHC", "IY": -5000}
 					], 
-		"SPD" : 3.6
+		"SPD" : 3.6,
+		"TITLE"	: "LEVEL 3",
+		"MSG" : ""
+	},
+
+
+	{"OBS": [ {"code": "SC", "IY": -100},
+					{"code": "RUL", "IY": -400},
+					{"code": "RUR", "IY": -600},
+					{"code": "RHL", "IY": -800},
+					{"code": "RHL", "IY": -1000},
+					{"code": "RHL", "IY": -1200},
+					{"code": "RHR", "IY": -1400},
+					{"code": "RHL", "IY": -1600},
+					{"code": "RHR", "IY": -1800},
+					{"code": "RHL", "IY": -2000},
+					{"code": "RHR", "IY": -2200},
+					{"code": "RHC", "IY": -2400},
+					{"code": "SC", "IY": -2600},
+					{"code": "RUL", "IY": -3000},
+					{"code": "RUR", "IY": -3200},
+					{"code": "RHR", "IY": -3400},
+					{"code": "RHR", "IY": -3600},
+					{"code": "RHR", "IY": -3800},
+					{"code": "RHR", "IY": -4000},
+					{"code": "RHL", "IY": -4200},
+					{"code": "RHR", "IY": -4400},
+					{"code": "RHL", "IY": -4600},
+					{"code": "RHR", "IY": -4800},
+					{"code": "RHC", "IY": -5000}
+					], 
+		"SPD" : 3.6,
+		"TITLE"	: "LEVEL 3",
+		"MSG" : "",
+		"AUDIO" : "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/song1.MP3"
 	}
 
 

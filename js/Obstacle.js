@@ -33,7 +33,7 @@ Obstacle.prototype.updatePos = function() {
 	if(this.dx != 0)
 	{if(this.x+this.w >= 400 || this.x <= 0) this.dx = this.dx * -1;}
 
-	if(this.counter == 90) {
+	if(this.counter == 44) {
 		if(!this.beating) {
 			this.x -= 1;
 			this.y -= 1;
