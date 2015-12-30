@@ -133,8 +133,8 @@ var Duet = function() {
 		collisionDetector = new CollisionDetector();
 
 		//loading background audio
-		// backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.MP3");
-		backgroundAudio = new Audio('sounds/bgaudio.MP3');
+		backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.mp3");
+		// backgroundAudio = new Audio('sounds/bgaudio.MP3');
 		backgroundAudio.loop = true;
 		backgroundAudio.volume = .50;
 		backgroundAudio.load();
