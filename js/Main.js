@@ -20,7 +20,8 @@ var Duet = function() {
 		START: "HIT SPACE TO START", 
 		PAUSE: "GAME PAUSED", 
 		OVER: "GAME OVER!", 
-		LVLCLR: "<p>LEVEL CLEARED!</p>",
+		LVLCLR: "LEVEL CLEARED!",
+		CHAPTERCLR: "A NEW CHAPTER",
 		CONTINUE: "PRESS SPACE TO CONTINUE",
 		NEWHS: "NEW HIGHSCORE: ",
 		NOMORELVL : "NO MORE LEVELS",
@@ -237,7 +238,7 @@ var Duet = function() {
     		break;
     	}
     	if(currentLevel.AUDIO) {
-    		screenMsg.innerHTML = MSG.LVLCLR + '<p>' + MSG.LOADING + '</p>';
+    		screenMsg.innerHTML = MSG.CHAPTERCLR + '<p>' + MSG.LOADING + '</p>';
     		canvasContainer.appendChild(screenOverlay);
     		backgroundAudio.src = currentLevel.AUDIO;
     		checkAudioInterval = setInterval(function(){
@@ -386,6 +387,7 @@ var Duet = function() {
       }
 
       if(PAUSE){
+      		btnPause.style.backgroundImage = "url('images/icon-pause.png')";
       		backgroundAudio.play();
 	        gameLoop = window.requestAnimationFrame(that.game);
 	        document.addEventListener('keypress', onKeyPress);

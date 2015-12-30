@@ -40,6 +40,14 @@ var ObstacleFactory = function(){
 			case 'RHR': //Rectangle Horizontal Right
 			return(new RectangleHorzR(dy, initialY));
 			break;
+
+			case 'RHLR': //Rectangle Horizontal Left Moving Right
+			return(new RectangleHorzLR(dy, initialY));
+			break;
+
+			case 'RHRL': //Rectangle Horizontal Right Moving Left
+			return(new RectangleHorzRL(dy, initialY));
+			break;
 		}
 	}	
 }

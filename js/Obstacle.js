@@ -139,7 +139,7 @@ inheritsFrom(SquareCLeft, Obstacle);
 
 //Rectangle Upright Right
 var RectangleUprightR = function(dy, y, fs) {
-	this.x = 100;
+	this.x = 280;
 	this.y = y;
 	this.w = 30;
 	this.h = 150;
@@ -158,7 +158,7 @@ inheritsFrom(RectangleUprightR, Obstacle);
 
 //Rectangle Upright Left
 var RectangleUprightL = function(dy, y, fs) {
-	this.x = 300;
+	this.x = 100;
 	this.y = y;
 	this.w = 30;
 	this.h = 150;
@@ -199,7 +199,7 @@ var RectangleHorzCRight = function(dy, y, fs) {
 	this.y =  y;
 	this.w = 70;
 	this.h = 30;
-	this.dx = 0.17;
+	this.dx = 0.5;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -217,7 +217,7 @@ var RectangleHorzCLeft = function(dy, y, fs) {
 	this.y =  y;
 	this.w = 70;
 	this.h = 30;
-	this.dx = -0.17;
+	this.dx = -0.5;
 	this.dy = dy;
 	this.initialX = this.x;
 	this.initialY = this.y;
@@ -247,6 +247,24 @@ var RectangleHorzL = function(dy, y, fs) {
 };
 inheritsFrom(RectangleHorzL, Obstacle);
 
+//Rectangle Horizontol Left Moving Right
+var RectangleHorzLR = function(dy, y, fs) {
+	this.x = 0;
+	this.y =  y;
+	this.w = 170;
+	this.h = 30;
+	this.dx = 1;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;
+	this.counter = 0;
+	this.beating = false;
+};
+inheritsFrom(RectangleHorzLR, Obstacle);
+
 //Rectangle Horizontol Right
 var RectangleHorzR = function(dy, y, fs) {
 	this.x = 200;
@@ -264,3 +282,21 @@ var RectangleHorzR = function(dy, y, fs) {
 	this.beating = false;
 };
 inheritsFrom(RectangleHorzR, Obstacle);
+
+//Rectangle Horizontol Right Moving Left
+var RectangleHorzRL = function(dy, y, fs) {
+	this.x = 200;
+	this.y =  y;
+	this.w = 170;
+	this.h = 30;
+	this.dx = -1;
+	this.dy = dy;
+	this.initialX = this.x;
+	this.initialY = this.y;
+	if(!fs)this.fs = 'white';
+	else this.fs = fs;
+	this.spd = 5;
+	this.counter = 0;
+	this.beating = false;
+};
+inheritsFrom(RectangleHorzRL, Obstacle);
