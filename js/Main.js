@@ -47,6 +47,7 @@ var Duet = function() {
 	var obsFactory = new ObstacleFactory();
 	var backgroundAudio;
 	var checkAudioInterval;
+	var rect;
 
 
 	var loadLevel = function() {	
@@ -99,6 +100,7 @@ var Duet = function() {
 		canvas.id = 'canvas';
 		canvasContainer.id = 'canvas-container';
 		canvasContainer.appendChild(canvas);
+		rect = canvas.getBoundingClientRect();
 
 		orbitCx = canvas.width/2;
 		orbitCy = canvas.height/1.3;
@@ -376,7 +378,6 @@ var Duet = function() {
 
   var onTouchStart = function(ev) {
   	ev.preventDefault();
-  	console.log('canvas touch start', ev.touches[0].clientX - rect.left ); 
   	var x = ev.touches[0].clientX - rect.left;
 	  	if(x<200) {
 	  		 ev.keyCode = 97;
