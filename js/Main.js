@@ -77,15 +77,17 @@ var Duet = function() {
 		playerData.score = 0;
 		playerData.level = 0;
 		backgroundAudio.src = "https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.mp3";
-    		checkAudioInterval = setInterval(function(){
-					console.log('checking audio');
-					if(checkAudioLoad()){
-						clearInterval(checkAudioInterval);
-						btnContinue.innerHTML = MSG.BTNSTART;
-						canvasContainer.appendChild(btnContinue);
-						GAMESTATE = STATE.START;
-					}
-				}, 1000);
+		screenMsg.innerHTML = MSG.LOADING;
+		canvasContainer.appendChild(screenOverlay);
+		checkAudioInterval = setInterval(function(){
+			console.log('checking audio');
+			if(checkAudioLoad()){
+				clearInterval(checkAudioInterval);
+				screenMsg.innerHTML = MSG.CONTINUE;
+				btnContinue.innerHTML = MSG.BTNSTART;
+				canvasContainer.appendChild(btnContinue);
+			}
+		}, 1000);
 	}
 	
 
@@ -200,7 +202,7 @@ var Duet = function() {
 				if(obstacles[obstacles.length-1].crossedFinish()) {
 					GAMESTATE = STATE.LVLCLR;
 				}
-				}
+			}
 
 			for(var i = 0; i < obstacles.length; i++) {
 		    obstacles[i].updatePos();
@@ -402,8 +404,8 @@ var Duet = function() {
       	if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
       	screenMsg.innerHTML = MSG.LOADING;
       	reset();
-      	// GAMESTATE = STATE.START;
-      	changeState();
+      	GAMESTATE = STATE.START;
+      	// changeState();
       }
 
       if(PAUSE){
