@@ -59,10 +59,10 @@ var Duet = function() {
 		var levelMsgTimeout = currentLevel.TIMEOUT;
 		canvasContainer.appendChild(levelTitle);
 		canvasContainer.appendChild(levelMsg);
-		setTimeout(function(){
+		if(document.getElementById('level-title'))setTimeout(function(){
 			canvasContainer.removeChild(levelTitle);
 		}, 3000);
-		setTimeout(function(){
+		if(document.getElementById('level-msg'))setTimeout(function(){
 			canvasContainer.removeChild(levelMsg);
 		}, levelMsgTimeout);
 	}
@@ -236,14 +236,18 @@ var Duet = function() {
 					console.log('checking audio');
 					if(checkAudioLoad()){
 						clearInterval(checkAudioInterval);
+						screenMsg.innerHTML = MSG.LVLCLR;
+						canvasContainer.appendChild(screenOverlay);
+						btnContinue.innerHTML = MSG.BTNCONTINUE;
+						canvasContainer.appendChild(btnContinue);
 						GAMESTATE = STATE.START;
 					}
 				}, 1000);
     	} 
-    	screenMsg.innerHTML = MSG.LVLCLR;
-			canvasContainer.appendChild(screenOverlay);
-			btnContinue.innerHTML = MSG.BTNCONTINUE;
-			canvasContainer.appendChild(btnContinue);
+    	else {screenMsg.innerHTML = MSG.LVLCLR;
+    				canvasContainer.appendChild(screenOverlay);
+    				btnContinue.innerHTML = MSG.BTNCONTINUE;
+    				canvasContainer.appendChild(btnContinue);}
     	window.cancelAnimationFrame(gameLoop);
     	GAMESTATE = STATE.START;
     	// document.body.removeChild(screenOverlay);
@@ -331,6 +335,8 @@ var Duet = function() {
 	    }
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
+      	if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+	      if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
       	reset();
       	GAMESTATE = STATE.START;
       	changeState();
