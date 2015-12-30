@@ -378,6 +378,7 @@ var Duet = function() {
 
   var onTouchStart = function(ev) {
   	ev.preventDefault();
+  	console.log('canvas touch start', ev.touches[0].clientX - rect.left ); 
   	var x = ev.touches[0].clientX - rect.left;
 	  	if(x<200) {
 	  		 ev.keyCode = 97;
