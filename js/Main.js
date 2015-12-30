@@ -20,8 +20,10 @@ var Duet = function() {
 		START: "HIT SPACE TO START", 
 		PAUSE: "GAME PAUSED", 
 		OVER: "GAME OVER!", 
-		LVLCLR: "<p>LEVEL CLEARED!</p> <p>PRESS SPACE TO CONTINUE</p>",
+		LVLCLR: "<p>LEVEL CLEARED!</p>",
+		CONTINUE: "PRESS SPACE TO CONTINUE",
 		NEWHS: "NEW HIGHSCORE: ",
+		NOMORELVL : "NO MORE LEVELS",
 		BTNCONTINUE: "CONTINUE",
 		BTNRESTART: "RESTART",
 		BTNRESUME: "RESUME",
@@ -202,11 +204,6 @@ var Duet = function() {
 	    case STATE.START:
 	    console.log('GAMESTATE', GAMESTATE);
 	    if(level[levelCounter])loadLevel();
-	    else {
-	    	MSG.LVLCLR = 'NO MORE LEVELS';
-	    	changeState();
-	    	GAMESTATE = STATE.PLAY;
-	  		break;}
     	changeState();
     	backgroundAudio.play();
     	GAMESTATE = STATE.PLAY;
@@ -230,22 +227,32 @@ var Duet = function() {
     	case STATE.LVLCLR:
     	console.log('GAMESTATE', GAMESTATE);
     	currentLevel = level[++levelCounter];
+    	screenMsg.innerHTML = MSG.LVLCLR;
+    	canvasContainer.appendChild(screenOverlay);
+    	if(currentLevel == undefined) {
+    		screenMsg.innerHTML = MSG.NOMORELVL;
+    		screenOverlay.appendChild(gameTitle);
+		    btnContinue.innerHTML = MSG.BTNRESTART;
+		    canvasContainer.appendChild(btnContinue);
+    		break;
+    	}
     	if(currentLevel.AUDIO) {
+    		screenMsg.innerHTML = MSG.LVLCLR + '<p>' + MSG.LOADING + '</p>';
+    		canvasContainer.appendChild(screenOverlay);
     		backgroundAudio.src = currentLevel.AUDIO;
     		checkAudioInterval = setInterval(function(){
 					console.log('checking audio');
 					if(checkAudioLoad()){
 						clearInterval(checkAudioInterval);
-						screenMsg.innerHTML = MSG.LVLCLR;
-						canvasContainer.appendChild(screenOverlay);
+						screenMsg.innerHTML = MSG.CONTINUE;
+						// canvasContainer.appendChild(screenOverlay);
 						btnContinue.innerHTML = MSG.BTNCONTINUE;
 						canvasContainer.appendChild(btnContinue);
 						GAMESTATE = STATE.START;
 					}
 				}, 1000);
     	} 
-    	else {screenMsg.innerHTML = MSG.LVLCLR;
-    				canvasContainer.appendChild(screenOverlay);
+    	else {
     				btnContinue.innerHTML = MSG.BTNCONTINUE;
     				canvasContainer.appendChild(btnContinue);}
     	window.cancelAnimationFrame(gameLoop);
@@ -372,7 +379,7 @@ var Duet = function() {
 		if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
 		 
       if(GAMESTATE == STATE.START)that.game();
-      if(GAMESTATE == STATE.OVER){
+      if(GAMESTATE == STATE.OVER || GAMESTATE == STATE.LVLCLR){
       	reset();
       	GAMESTATE = STATE.START;
       	changeState();
