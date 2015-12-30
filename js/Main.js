@@ -54,19 +54,6 @@ var Duet = function() {
 		obstacles[i] = obsFactory.getObstacle(currentLevel.OBS[i].code, currentLevel.SPD, currentLevel.OBS[i].IY);
 		}
 		playerData.level += 1;
-		if(currentLevel.AUDIO){
-		screenMsg.innerHTML = MSG.LOADING;
-		canvasContainer.appendChild(screenOverlay);
-		backgroundAudio.src = currentLevel.AUDIO;
-		checkAudioInterval = setInterval(function(){
-				if(checkAudioLoad()){
-					clearInterval(checkAudioInterval);
-					backgroundAudio.play();
-					screenMsg.innerHTML = MSG.START;
-					canvasContainer.appendChild(btnContinue);
-				}
-			}, 1000);
-		}
 		levelTitle.innerHTML = currentLevel.TITLE;
 		levelMsg.innerHTML = currentLevel.MSG;
 		canvasContainer.appendChild(levelTitle);
@@ -146,17 +133,15 @@ var Duet = function() {
 		collisionDetector = new CollisionDetector();
 
 		//loading background audio
-		backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.MP3");
-		// backgroundAudio = new Audio('sounds/bgaudio.MP3');
+		// backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/bgaudio.MP3");
+		backgroundAudio = new Audio('sounds/bgaudio.MP3');
 		backgroundAudio.loop = true;
 		backgroundAudio.volume = .50;
 		backgroundAudio.load();
-		console.log(backgroundAudio.src);
 
 		checkAudioInterval = setInterval(function(){
 			if(checkAudioLoad()){
 				clearInterval(checkAudioInterval);
-				backgroundAudio.play();
 				screenMsg.innerHTML = MSG.START;
 				canvasContainer.appendChild(btnContinue);
 			}
@@ -360,10 +345,11 @@ var Duet = function() {
 
   var onContinue = function(ev) {
   	console.log('in onContinue');
-  	 if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
-  	 if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
-  	 if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
-  	 if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
+		if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
+		if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+		if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
+		if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
+		 
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
       	reset();
