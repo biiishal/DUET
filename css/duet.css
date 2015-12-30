@@ -12,6 +12,25 @@
 	margin: 0 auto;
 }
 
+#canvas-container #btn-pause {
+	position: absolute;
+	right: 16px;
+	top: 24px;
+	background-image: url(../images/icon-pause.png);
+	background-repeat: no-repeat;
+	height: 16px;
+	width: 16px;
+}
+
+#canvas-container #game-subtitle {
+	position: absolute;
+	bottom: 2px;
+	left: 34%;
+	color: white;
+	font-size: 10px;
+	word-spacing: 9px;
+}
+
 #screen-overlay {
 	position: absolute;
 	display: block;
@@ -31,11 +50,16 @@
 	text-align: center;
 }
 
+#screen-overlay #game-title {
+	font-size: 70px;
+	color: white;
+}
+
 #btn-continue {
 	position: absolute;
 	background-color: red;
 	border-radius: 5px;
 	padding:5px;
 	top:40%;
-	left: 43%;
+	left: 42%;
 }

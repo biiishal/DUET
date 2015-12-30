@@ -8,19 +8,24 @@ var Duet = function() {
 	var canvas = document.getElementById('canvas');
 	var canvasContainer = document.getElementById('canvas-container');
 	var screenOverlay;
+	var gameTitle;
+	var gameSubtitle;
 	var btnContinue;
+	var btnPause;
 	var screenMsg;
 	var MSG = {	
 		LOADING: "LOADING...",
 		START: "HIT SPACE TO START", 
 		PAUSE: "GAME PAUSED", 
 		OVER: "GAME OVER!", 
-		LVLCLR: "LEVEL CLEARED! PRESS SPACE TO CONTINUE",
+		LVLCLR: "<p>LEVEL CLEARED!</p> <p>PRESS SPACE TO CONTINUE</p>",
 		NEWHS: "NEW HIGHSCORE: ",
 		BTNCONTINUE: "CONTINUE",
 		BTNRESTART: "RESTART",
 		BTNRESUME: "RESUME",
-		BTNSTART: "START"};
+		BTNSTART: "START",
+		GAMETITLE: "DUET",
+		GAMESUBTITLE: "HEADPHONES RECOMMENDED"};
 	var orbitCx = canvas.width/2;
 	var orbitCy = canvas.height/1.3;
 	var angleInterval = 15;
@@ -86,19 +91,34 @@ var Duet = function() {
 		btnContinue = document.createElement('div');
 		btnContinue.id = 'btn-continue';		
 
+		btnPause = document.createElement('div');
+		btnPause.id = 'btn-pause';
+		btnPause.addEventListener('click', onPause);
+
+		gameTitle = document.createElement('p');
+		gameTitle.id = 'game-title';
+		gameTitle.innerHTML = MSG.GAMETITLE;
+
+		gameSubtitle = document.createElement('p');
+		gameSubtitle.id = 'game-subtitle';
+		gameSubtitle.innerHTML = MSG.GAMESUBTITLE;
+
 		screenMsg = document.createElement('p');
 		screenOverlay.appendChild(screenMsg);
+		screenOverlay.appendChild(gameTitle);
 		btnContinue.innerHTML = MSG.BTNSTART;
 		btnContinue.addEventListener('click', onContinue);
 
 		screenMsg.innerHTML = MSG.LOADING;
 		canvasContainer.appendChild(screenOverlay);
+		canvasContainer.appendChild(gameSubtitle);
+		canvasContainer.appendChild(btnPause);
 
 		collisionDetector = new CollisionDetector();
 
 		//loading background audio
-		backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/level1.MP3");
-		// backgroundAudio = new Audio('sounds/level1.MP3');
+		// backgroundAudio = new Audio("https://raw.githubusercontent.com/biiishal/DUET/gh-pages/sounds/level1.MP3");
+		backgroundAudio = new Audio('sounds/level1.MP3');
 		backgroundAudio.loop = true;
 		backgroundAudio.volume = .50;
 		backgroundAudio.load();
@@ -106,7 +126,6 @@ var Duet = function() {
 		checkAudioInterval = setInterval(function(){
 			if(checkAudioLoad()){
 				clearInterval(checkAudioInterval);
-				console.log('checking audio load');
 				screenMsg.innerHTML = MSG.START;
 				canvasContainer.appendChild(btnContinue);
 			}
@@ -175,6 +194,7 @@ var Duet = function() {
 	    case STATE.OVER:
 	    console.log('GAMESTATE', GAMESTATE);
 	    if(gameLoop)window.cancelAnimationFrame(gameLoop);
+	    screenOverlay.appendChild(gameTitle);
 	    btnContinue.innerHTML = MSG.BTNRESTART;
 	    canvasContainer.appendChild(btnContinue);
 	    if(playerData.score > playerData.highScore) {
@@ -191,7 +211,7 @@ var Duet = function() {
     	currentLevel = level[++levelCounter];
     	screenMsg.innerHTML = MSG.LVLCLR;
 			canvasContainer.appendChild(screenOverlay);
-			btnContinue.innerHTML = MSG.BTNSTART;
+			btnContinue.innerHTML = MSG.BTNCONTINUE;
 			canvasContainer.appendChild(btnContinue);
     	window.cancelAnimationFrame(gameLoop);
     	GAMESTATE = STATE.START;
@@ -242,10 +262,13 @@ var Duet = function() {
       case KEY.ESC:
       if(GAMESTATE == STATE.PLAY){
 	      if(!PAUSE){
+	      	btnPause.style.backgroundImage = "url('images/icon-play.png')";
 	        if(gameLoop)window.cancelAnimationFrame(gameLoop);
 	        backgroundAudio.pause();
 	        document.removeEventListener('keypress', onKeyPress);
 	        document.removeEventListener('keyup', onKeyUp);
+	        canvas.removeEventListener('touchstart', onTouchStart);
+	        canvas.removeEventListener('touchend', onTouchEnd);
 	        screenMsg.innerHTML = MSG.PAUSE;
 	        btnContinue.innerHTML = 'RESUME';
 	        canvasContainer.appendChild(screenOverlay);
@@ -253,12 +276,15 @@ var Duet = function() {
 	        PAUSE = !PAUSE;
 	      }
 	      else {
+	      	btnPause.style.backgroundImage = "url('images/icon-pause.png')";
 	      	backgroundAudio.play();
 	      	if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
   	 			if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
 	        gameLoop = window.requestAnimationFrame(that.game);
 	        document.addEventListener('keypress', onKeyPress);
 	        document.addEventListener('keyup', onKeyUp);
+	        canvas.addEventListener('touchstart', onTouchStart);
+	        canvas.addEventListener('touchend', onTouchEnd);
 	        PAUSE = !PAUSE;
 	      }  
     	}
@@ -266,8 +292,12 @@ var Duet = function() {
 
       case KEY.SPACE:   
       // console.log('space pressed');
-      if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
-      if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
+      if(!PAUSE){
+	      if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
+	      if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
+	      if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+	      if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
+	    }
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
       	reset();
@@ -300,7 +330,9 @@ var Duet = function() {
   var onContinue = function(ev) {
   	console.log('in onContinue');
   	 if(document.getElementById('screen-overlay'))canvasContainer.removeChild(screenOverlay);
+  	 if(document.getElementById('game-subtitle'))canvasContainer.removeChild(gameSubtitle);
   	 if(document.getElementById('btn-continue'))canvasContainer.removeChild(btnContinue);
+  	 if(document.getElementById('game-title'))screenOverlay.removeChild(gameTitle);
       if(GAMESTATE == STATE.START)that.game();
       if(GAMESTATE == STATE.OVER){
       	reset();
@@ -315,5 +347,10 @@ var Duet = function() {
 	        document.addEventListener('keyup', onKeyUp);
 	        PAUSE = !PAUSE;
 	      }  
+  }
+
+  var onPause = function(ev) {
+  	ev.keyCode = KEY.ESC;
+  	onKeyDown(ev);
   }
 }
