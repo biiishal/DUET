@@ -43,7 +43,7 @@ var Duet = function() {
 	var scoreCounter = 0;
 	var levelCounter = 0;
 	var currentLevel = level[levelCounter];
-	var playerData = {life: 5, score: 0, highScore: 0, level: 0};
+	var playerData = {life: 15, score: 0, highScore: 0, level: 0};
 	var obsFactory = new ObstacleFactory();
 	var backgroundAudio;
 	var checkAudioInterval;
